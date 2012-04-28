@@ -4,6 +4,7 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
+    @strategy = new gameOfLife.Strategy(this)
     @cells = []
     for x in [1..@numOfColumns]
       column = []
@@ -27,16 +28,18 @@ class gameOfLife.Game
     [x, y]
 
   nextRound:() ->
-    this.nextRoundOfgameOfLife()
+    this.strategy.nextRound()
 
+class gameOfLife.Strategy
+  constructor:(@game) ->
 
-  nextRoundOfgameOfLife:() ->
+  nextRound:() ->
     lives = []
     deads = []
 
-    for x in [0..@numOfColumns-1]
-      for y in [0..@numOfRows-1]
-        if (@cells[x][y])
+    for x in [0..@game.numOfColumns-1]
+      for y in [0..@game.numOfRows-1]
+        if (@game.cells[x][y])
           if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
             lives.push([x, y])
           else
@@ -47,9 +50,9 @@ class gameOfLife.Game
             lives.push([x, y])
 
     for dead in deads
-      @cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD
+      @game.cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD
     for live in lives
-      @cells[live[0]][live[1]] = gameOfLife.Game.LIVE
+      @game.cells[live[0]][live[1]] = gameOfLife.Game.LIVE
 
 
   numOfLivingNeighbours:(x, y) ->
@@ -60,9 +63,10 @@ class gameOfLife.Game
     ]
     livingNeighbours = 0
     for n in nbs
-      n = this.modulo(n)
-      livingNeighbours = livingNeighbours + 1 if @cells[n[0]][n[1]]
+      n = @game.modulo(n)
+      livingNeighbours = livingNeighbours + 1 if @game.cells[n[0]][n[1]]
     livingNeighbours
+
 
 
 class gameOfLife.Drawer
