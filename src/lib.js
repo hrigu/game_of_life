@@ -1,4 +1,7 @@
+//the library is wrapped in the so called top-level function safety wrapper to handle the namespace
 (function() {
+
+    //for class inheritance
     var __hasProp = Object.prototype.hasOwnProperty;
     var __extends = function(child, parent) {
         for (var key in parent) {
@@ -14,6 +17,7 @@
         return child;
     };
 
+    //the only object that is visible outside of the library
     this.gameOfLife = {};
 
     gameOfLife.Game = (function() {
@@ -22,21 +26,22 @@
 
         Game.DEAD = false;
 
+        //initializes the board with dead cells
         function Game(numOfColumns, numOfRows) {
-            var column, x, y, _ref, _ref2;
             this.numOfColumns = numOfColumns;
             this.numOfRows = numOfRows;
             this.strategy = new gameOfLife.DiagonalStrategy(this);
             this.cells = [];
-            for (x = 1,_ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
-                column = [];
-                for (y = 1,_ref2 = this.numOfRows; 1 <= _ref2 ? y <= _ref2 : y >= _ref2; 1 <= _ref2 ? y++ : y--) {
+            for (var x = 0; x < this.numOfColumns; x++) {
+                var column = [];
+                for (var y = 0; y < this.numOfRows; y++) {
                     column.push(gameOfLife.Game.DEAD);
                 }
                 this.cells.push(column);
             }
         }
 
+        //Sets the value on a specific cell. The value can be Game.LIVE or Game.DEAD
         Game.prototype.set = function(x, y, value) {
             var point;
             if (value == null) value = gameOfLife.Game.LIVE;
@@ -44,12 +49,15 @@
             this.cells[point[0]][point[1]] = value;
         };
 
+
+        //returns the value of a specific cell.
         Game.prototype.get = function(x, y) {
             var point;
             point = this.modulo([x, y]);
-            this.cells[point[0]][point[1]];
+            return this.cells[point[0]][point[1]];
         };
 
+        //handles the fact that points can be outside the board. They are mapped into the board.
         Game.prototype.modulo = function(point) {
             var x = point[0];
             if (x < 0) x += this.numOfColumns;
@@ -68,12 +76,14 @@
 
     })();
 
+    //superclass of all strategies.
     gameOfLife.Strategy = (function() {
 
         function Strategy(game) {
             this.game = game;
         }
 
+        //iterates over all cells and delegates the actual work to the handleAliveCell and the handleDeadCell function
         Strategy.prototype.nextRound = function() {
             var changes = [];
             for (var x = 0; x < this.game.numOfColumns; x++) {
@@ -100,6 +110,8 @@
 
     })();
 
+
+    //This simple strategy makes the live cells walking diagonal over the board
     gameOfLife.DiagonalStrategy = (function(_super) {
 
         __extends(DiagonalStrategy, _super);
@@ -117,6 +129,8 @@
 
     })(gameOfLife.Strategy);
 
+
+    //responsible to draw the game to the canvas
     gameOfLife.Drawer = (function() {
 
         function Drawer(game, factor) {
