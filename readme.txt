@@ -1,1 +1,1 @@
-Simple html5 canvas game written with coffeescript
+coding Dojo with javascript
