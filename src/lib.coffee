@@ -13,15 +13,18 @@ class gameOfLife.Game
 
 
   setLive: (x, y) ->
-    @cells[x][y] = gameOfLife.Game.LIVE
+    point = modulo([x, y])
+    @cells[point[0]][point[1]] = gameOfLife.Game.LIVE
 
 
-  createPoint: (x, y) ->
-    y = @numOfRows + y  if y < 0
+  modulo: (point) ->
+    x = point[0]
     x = @numOfColumns + x  if x < 0
     x = x % @numOfColumns
+    y = point[1]
+    y = @numOfRows + y  if y < 0
     y = y % @numOfRows
-    {x, y}
+    [x, y]
 
   nextRound:() ->
     this.nextRoundOfgameOfLife()
@@ -57,8 +60,8 @@ class gameOfLife.Game
     ]
     livingNeighbours = 0
     for n in nbs
-      p = this.createPoint(n[0], n[1])
-      livingNeighbours = livingNeighbours + 1 if @cells[p.x][p.y]
+      n = modulo(n)
+      livingNeighbours = livingNeighbours + 1 if @cells[n[0]][n[1]]
     livingNeighbours
 
 
