@@ -14,7 +14,7 @@
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
+      this.strategy = new gameOfLife.DiagonalStrategy(this);
       this.cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
@@ -67,37 +67,49 @@
     }
 
     Strategy.prototype.nextRound = function() {
-      var dead, deads, live, lives, x, y, _i, _j, _len, _len2, _ref, _ref2, _results;
-      lives = [];
-      deads = [];
+      var change, changes, x, y, _i, _len, _ref, _ref2, _results;
+      changes = [];
       for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
         for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
           if (this.game.cells[x][y]) {
-            this.handleLifeCell(x, y, lives, deads);
+            this.handleLifeCell(x, y, changes);
           } else {
-            this.handleDeadCell(x, y, lives, deads);
+            this.handleDeadCell(x, y, changes);
           }
         }
       }
-      for (_i = 0, _len = deads.length; _i < _len; _i++) {
-        dead = deads[_i];
-        this.game.cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD;
-      }
       _results = [];
-      for (_j = 0, _len2 = lives.length; _j < _len2; _j++) {
-        live = lives[_j];
-        _results.push(this.game.cells[live[0]][live[1]] = gameOfLife.Game.LIVE);
+      for (_i = 0, _len = changes.length; _i < _len; _i++) {
+        change = changes[_i];
+        _results.push(this.game.set(change[0], change[1], change[2]));
       }
       return _results;
     };
 
-    Strategy.prototype.handleLifeCell = function(x, y, lives, deads) {};
+    Strategy.prototype.handleLifeCell = function(x, y, changes) {};
 
-    Strategy.prototype.handleDeadCell = function(x, y, lives, deads) {};
+    Strategy.prototype.handleDeadCell = function(x, y, changes) {};
 
     return Strategy;
 
   })();
+
+  gameOfLife.DiagonalStrategy = (function(_super) {
+
+    __extends(DiagonalStrategy, _super);
+
+    function DiagonalStrategy() {
+      DiagonalStrategy.__super__.constructor.apply(this, arguments);
+    }
+
+    DiagonalStrategy.prototype.handleLifeCell = function(x, y, changes) {
+      changes.push([x, y, false]);
+      return changes.push([x + 1, y + 1, true]);
+    };
+
+    return DiagonalStrategy;
+
+  })(gameOfLife.Strategy);
 
   gameOfLife.GameOfLifeStrategy = (function(_super) {
 
@@ -107,16 +119,18 @@
       GameOfLifeStrategy.__super__.constructor.apply(this, arguments);
     }
 
-    GameOfLifeStrategy.prototype.handleLifeCell = function(x, y, lives, deads) {
+    GameOfLifeStrategy.prototype.handleLifeCell = function(x, y, changes) {
       if (this.numOfLivingNeighbours(x, y) === 2 || this.numOfLivingNeighbours(x, y) === 3) {
-        return lives.push([x, y]);
+        return changes.push([x, y, true]);
       } else {
-        return deads.push([x, y]);
+        return changes.push([x, y, false]);
       }
     };
 
-    GameOfLifeStrategy.prototype.handleDeadCell = function(x, y, lives, deads) {
-      if (this.numOfLivingNeighbours(x, y) === 3) return lives.push([x, y]);
+    GameOfLifeStrategy.prototype.handleDeadCell = function(x, y, changes) {
+      if (this.numOfLivingNeighbours(x, y) === 3) {
+        return changes.push([x, y, true]);
+      }
     };
 
     GameOfLifeStrategy.prototype.numOfLivingNeighbours = function(x, y) {
