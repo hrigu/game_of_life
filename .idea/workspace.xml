@@ -23,10 +23,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="script.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="script.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/script.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="61" selection-start="208" selection-end="208" vertical-scroll-proportion="-3.2727273">
+            <state line="38" column="27" selection-start="629" selection-end="629" vertical-scroll-proportion="0.6312292">
               <folding />
             </state>
           </provider>
@@ -35,16 +35,16 @@
       <file leaf-file-name="lib.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="21" selection-start="2800" selection-end="2800" vertical-scroll-proportion="-29.727272">
+            <state line="31" column="14" selection-start="616" selection-end="616" vertical-scroll-proportion="-8.454545">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spec.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="spec.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="32" selection-start="573" selection-end="573" vertical-scroll-proportion="0.29900333">
+            <state line="51" column="54" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -61,9 +61,9 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/script.js" />
+        <option value="$PROJECT_DIR$/spec/spec.coffee" />
         <option value="$PROJECT_DIR$/src/lib.coffee" />
         <option value="$PROJECT_DIR$/src/script.coffee" />
-        <option value="$PROJECT_DIR$/spec/spec.coffee" />
       </list>
     </option>
   </component>
@@ -294,21 +294,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="21" selection-start="2800" selection-end="2800" vertical-scroll-proportion="-29.727272">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/script.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="61" selection-start="208" selection-end="208" vertical-scroll-proportion="-3.2727273">
+        <state line="31" column="14" selection-start="616" selection-end="616" vertical-scroll-proportion="-8.454545">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="32" selection-start="573" selection-end="573" vertical-scroll-proportion="0.29900333">
+        <state line="51" column="54" selection-start="1594" selection-end="1594" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/script.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="27" selection-start="629" selection-end="629" vertical-scroll-proportion="0.6312292">
           <folding />
         </state>
       </provider>

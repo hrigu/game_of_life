@@ -4,8 +4,6 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @deads = []
-    @lives = []
     @cells = []
     for x in [1..@numOfColumns]
       column = []
@@ -15,9 +13,8 @@ class gameOfLife.Game
 
 
   setLive: (x, y) ->
-    point = this.createPoint(x, y)
-    @lives.push point
-    @cells[point.x][point.y] = gameOfLife.Game.LIVE
+    @cells[x][y] = gameOfLife.Game.LIVE
+
 
   createPoint: (x, y) ->
     y = @numOfRows + y  if y < 0
@@ -27,32 +24,28 @@ class gameOfLife.Game
     {x, y}
 
   nextRound:() ->
-    #this.simpleGlider()
     this.nextRoundOfgameOfLife()
 
 
   nextRoundOfgameOfLife:() ->
-    newLives = []
-    starving = []
+    lives = []
+    deads = []
 
     for x in [0..@numOfColumns-1]
       for y in [0..@numOfRows-1]
         if (@cells[x][y])
-
           if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
-            newLives.push(this.createPoint(x, y))
+            lives.push(this.createPoint(x, y))
           else
-            starving.push this.createPoint(x, y)
+            deads.push this.createPoint(x, y)
 
         else
           if (this.numOfLivingNeighbours(x, y) == 3)
-            newLives.push(this.createPoint(x, y))
+            lives.push(this.createPoint(x, y))
 
-    @deads = starving
-    @lives = newLives
-    for dead in @deads
+    for dead in deads
       @cells[dead.x][dead.y] = gameOfLife.Game.DEAD
-    for live in @lives
+    for live in lives
       @cells[live.x][live.y] = gameOfLife.Game.LIVE
 
 
@@ -65,24 +58,6 @@ class gameOfLife.Game
       livingNeighbours = livingNeighbours + 1 if @cells[n.x][n.y]
     livingNeighbours
 
-
-  simpleGlider:() ->
-    newLives = []
-    for live in @lives
-      x = live.x+1
-      y = live.y+1
-      newLives.push this.createPoint(x, y)
-    @deads = @lives
-    @lives = newLives
-
-    for dead in @deads
-      @cells[dead.x][dead.y] = gameOfLife.Game.DEAD
-    for live in @lives
-      @cells[live.x][live.y] = gameOfLife.Game.LIVE
-
-
-  randomNumber:(min, max) ->
-    Math.floor(Math.random()*(max-min+1)+ min)
 
 class gameOfLife.Drawer
   constructor:(@game, @factor) ->
@@ -106,12 +81,13 @@ class gameOfLife.Drawer
     context.stroke()
 
   draw:(context) ->
-    context.fillStyle = "white"
-    for dead in @game.deads
-      this.drawRect(context, dead)
-    context.fillStyle = "black"
-    for live in @game.lives
-      this.drawRect(context, live)
+    for x in [0..@game.numOfColumns-1]
+      for y in [0..@game.numOfRows-1]
+       if @game.cells[x][y]
+        context.fillStyle = "black"
+       else
+        context.fillStyle = "white"
+       this.drawRect(context, x, y)
 
-  drawRect:(context, rect) ->
-    context.fillRect(rect.x * @factor+1, rect.y * @factor+1, @factor-1, @factor-1)
+  drawRect:(context, x, y) ->
+    context.fillRect(x * @factor+1, y * @factor+1, @factor-1, @factor-1)

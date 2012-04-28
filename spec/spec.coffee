@@ -8,11 +8,9 @@ describe "Game", ->
     expect(game.numOfRows).toBe 2
 
   describe "setLive", ->
-    it "the live cell should be in the lives array", ->
-      expect(game.lives.length).toBe 0
+    it "the live cell is stored in cells", ->
       game.setLive(2, 1)
-      expect(game.lives.length).toBe 1
-      expect(game.lives[0]).toEqual {x:2, y:1}
+      expect(game.cells[2][1]).toBe true
 
   describe "numOfLivingNeighbours", ->
     beforeEach ->
@@ -52,22 +50,3 @@ describe "Game", ->
         game.setLive(2, 1)
         game.setLive(2, 2)
         expect(game.numOfLivingNeighbours(1,1)).toBe 8
-###
-  describe "move", ->
-    it "should set the next cell be alive (and the actual to dead)", ->
-      game.setLive(0, 0)
-      expect(game.lives.length).toBe 1
-      expect(game.lives[0]).toEqual {x:0, y:0}
-      expect(game.deads.length).toBe 0
-      game.move()
-      expect(game.lives.length).toBe 1
-      expect(game.lives[0]).toEqual {x:1, y:1}
-      expect(game.deads.length).toBe 1
-      expect(game.deads[0]).toEqual {x:0, y:0}
-
-    it "should set the most left cell to alive if the actual is the most right one", ->
-      game.setLive(2, 0)
-      game.move()
-      expect(game.lives[0]).toEqual {x:0, y:1}
-
-###

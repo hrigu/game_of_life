@@ -11,7 +11,7 @@
     var canvas;
     canvas = getCanvas();
     ctx = canvas.getContext('2d');
-    game = new gameOfLife.Game(200, 100);
+    game = new gameOfLife.Game(40, 20);
     game.setLive(2, 1);
     game.setLive(3, 2);
     game.setLive(1, 3);
@@ -22,9 +22,9 @@
     game.setLive(21, 3);
     game.setLive(22, 3);
     game.setLive(23, 3);
-    drawer = new gameOfLife.Drawer(game, 3);
+    drawer = new gameOfLife.Drawer(game, 10);
     drawer.drawGrid(ctx);
-    return setInterval(run_loop, 10);
+    return setInterval(run_loop, 100);
   });
 
   run_loop = function() {

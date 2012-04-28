@@ -13,14 +13,9 @@
       return expect(game.numOfRows).toBe(2);
     });
     describe("setLive", function() {
-      return it("the live cell should be in the lives array", function() {
-        expect(game.lives.length).toBe(0);
+      return it("the live cell is stored in cells", function() {
         game.setLive(2, 1);
-        expect(game.lives.length).toBe(1);
-        return expect(game.lives[0]).toEqual({
-          x: 2,
-          y: 1
-        });
+        return expect(game.cells[2][1]).toBe(true);
       });
     });
     return describe("numOfLivingNeighbours", function() {
@@ -72,24 +67,5 @@
       });
     });
   });
-
-  /*
-    describe "move", ->
-      it "should set the next cell be alive (and the actual to dead)", ->
-        game.setLive(0, 0)
-        expect(game.lives.length).toBe 1
-        expect(game.lives[0]).toEqual {x:0, y:0}
-        expect(game.deads.length).toBe 0
-        game.move()
-        expect(game.lives.length).toBe 1
-        expect(game.lives[0]).toEqual {x:1, y:1}
-        expect(game.deads.length).toBe 1
-        expect(game.deads[0]).toEqual {x:0, y:0}
-  
-      it "should set the most left cell to alive if the actual is the most right one", ->
-        game.setLive(2, 0)
-        game.move()
-        expect(game.lives[0]).toEqual {x:0, y:1}
-  */
 
 }).call(this);

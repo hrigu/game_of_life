@@ -12,8 +12,6 @@
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.deads = [];
-      this.lives = [];
       this.cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
@@ -25,10 +23,7 @@
     }
 
     Game.prototype.setLive = function(x, y) {
-      var point;
-      point = this.createPoint(x, y);
-      this.lives.push(point);
-      return this.cells[point.x][point.y] = gameOfLife.Game.LIVE;
+      return this.cells[x][y] = gameOfLife.Game.LIVE;
     };
 
     Game.prototype.createPoint = function(x, y) {
@@ -47,35 +42,31 @@
     };
 
     Game.prototype.nextRoundOfgameOfLife = function() {
-      var dead, live, newLives, starving, x, y, _i, _j, _len, _len2, _ref, _ref2, _ref3, _ref4, _results;
-      newLives = [];
-      starving = [];
+      var dead, deads, live, lives, x, y, _i, _j, _len, _len2, _ref, _ref2, _results;
+      lives = [];
+      deads = [];
       for (x = 0, _ref = this.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
         for (y = 0, _ref2 = this.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
           if (this.cells[x][y]) {
             if (this.numOfLivingNeighbours(x, y) === 2 || this.numOfLivingNeighbours(x, y) === 3) {
-              newLives.push(this.createPoint(x, y));
+              lives.push(this.createPoint(x, y));
             } else {
-              starving.push(this.createPoint(x, y));
+              deads.push(this.createPoint(x, y));
             }
           } else {
             if (this.numOfLivingNeighbours(x, y) === 3) {
-              newLives.push(this.createPoint(x, y));
+              lives.push(this.createPoint(x, y));
             }
           }
         }
       }
-      this.deads = starving;
-      this.lives = newLives;
-      _ref3 = this.deads;
-      for (_i = 0, _len = _ref3.length; _i < _len; _i++) {
-        dead = _ref3[_i];
+      for (_i = 0, _len = deads.length; _i < _len; _i++) {
+        dead = deads[_i];
         this.cells[dead.x][dead.y] = gameOfLife.Game.DEAD;
       }
-      _ref4 = this.lives;
       _results = [];
-      for (_j = 0, _len2 = _ref4.length; _j < _len2; _j++) {
-        live = _ref4[_j];
+      for (_j = 0, _len2 = lives.length; _j < _len2; _j++) {
+        live = lives[_j];
         _results.push(this.cells[live.x][live.y] = gameOfLife.Game.LIVE);
       }
       return _results;
@@ -90,36 +81,6 @@
         if (this.cells[n.x][n.y]) livingNeighbours = livingNeighbours + 1;
       }
       return livingNeighbours;
-    };
-
-    Game.prototype.simpleGlider = function() {
-      var dead, live, newLives, x, y, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _results;
-      newLives = [];
-      _ref = this.lives;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        live = _ref[_i];
-        x = live.x + 1;
-        y = live.y + 1;
-        newLives.push(this.createPoint(x, y));
-      }
-      this.deads = this.lives;
-      this.lives = newLives;
-      _ref2 = this.deads;
-      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        dead = _ref2[_j];
-        this.cells[dead.x][dead.y] = gameOfLife.Game.DEAD;
-      }
-      _ref3 = this.lives;
-      _results = [];
-      for (_k = 0, _len3 = _ref3.length; _k < _len3; _k++) {
-        live = _ref3[_k];
-        _results.push(this.cells[live.x][live.y] = gameOfLife.Game.LIVE);
-      }
-      return _results;
-    };
-
-    Game.prototype.randomNumber = function(min, max) {
-      return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
     return Game;
@@ -153,25 +114,28 @@
     };
 
     Drawer.prototype.draw = function(context) {
-      var dead, live, _i, _j, _len, _len2, _ref, _ref2, _results;
-      context.fillStyle = "white";
-      _ref = this.game.deads;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        dead = _ref[_i];
-        this.drawRect(context, dead);
-      }
-      context.fillStyle = "black";
-      _ref2 = this.game.lives;
+      var x, y, _ref, _results;
       _results = [];
-      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        live = _ref2[_j];
-        _results.push(this.drawRect(context, live));
+      for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
+        _results.push((function() {
+          var _ref2, _results2;
+          _results2 = [];
+          for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
+            if (this.game.cells[x][y]) {
+              context.fillStyle = "black";
+            } else {
+              context.fillStyle = "white";
+            }
+            _results2.push(this.drawRect(context, x, y));
+          }
+          return _results2;
+        }).call(this));
       }
       return _results;
     };
 
-    Drawer.prototype.drawRect = function(context, rect) {
-      return context.fillRect(rect.x * this.factor + 1, rect.y * this.factor + 1, this.factor - 1, this.factor - 1);
+    Drawer.prototype.drawRect = function(context, x, y) {
+      return context.fillRect(x * this.factor + 1, y * this.factor + 1, this.factor - 1, this.factor - 1);
     };
 
     return Drawer;
