@@ -12,7 +12,7 @@
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.Strategy(this);
+      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
       this.cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
@@ -24,9 +24,19 @@
     }
 
     Game.prototype.setLive = function(x, y) {
+      return this.set(x, y, gameOfLife.Game.LIVE);
+    };
+
+    Game.prototype.set = function(x, y, value) {
       var point;
       point = this.modulo([x, y]);
-      return this.cells[point[0]][point[1]] = gameOfLife.Game.LIVE;
+      return this.cells[point[0]][point[1]] = value;
+    };
+
+    Game.prototype.get = function(x, y) {
+      var point;
+      point = this.modulo([x, y]);
+      return this.cells[point[0]][point[1]];
     };
 
     Game.prototype.modulo = function(point) {
@@ -48,13 +58,13 @@
 
   })();
 
-  gameOfLife.Strategy = (function() {
+  gameOfLife.GameOfLifeStrategy = (function() {
 
-    function Strategy(game) {
+    function GameOfLifeStrategy(game) {
       this.game = game;
     }
 
-    Strategy.prototype.nextRound = function() {
+    GameOfLifeStrategy.prototype.nextRound = function() {
       var dead, deads, live, lives, x, y, _i, _j, _len, _len2, _ref, _ref2, _results;
       lives = [];
       deads = [];
@@ -83,19 +93,18 @@
       return _results;
     };
 
-    Strategy.prototype.numOfLivingNeighbours = function(x, y) {
+    GameOfLifeStrategy.prototype.numOfLivingNeighbours = function(x, y) {
       var livingNeighbours, n, nbs, _i, _len;
       nbs = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]];
       livingNeighbours = 0;
       for (_i = 0, _len = nbs.length; _i < _len; _i++) {
         n = nbs[_i];
-        n = this.game.modulo(n);
-        if (this.game.cells[n[0]][n[1]]) livingNeighbours = livingNeighbours + 1;
+        if (this.game.get(n[0], n[1])) livingNeighbours = livingNeighbours + 1;
       }
       return livingNeighbours;
     };
 
-    return Strategy;
+    return GameOfLifeStrategy;
 
   })();
 

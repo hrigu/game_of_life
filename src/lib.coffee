@@ -1,10 +1,11 @@
 this.gameOfLife = {}
+
 class gameOfLife.Game
   @LIVE = true
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.Strategy(this)
+    @strategy = new gameOfLife.GameOfLifeStrategy(this)
     @cells = []
     for x in [1..@numOfColumns]
       column = []
@@ -14,9 +15,15 @@ class gameOfLife.Game
 
 
   setLive: (x, y) ->
-    point = this.modulo([x, y])
-    @cells[point[0]][point[1]] = gameOfLife.Game.LIVE
+    this.set(x, y, gameOfLife.Game.LIVE)
 
+  set:(x, y, value) ->
+    point = this.modulo([x, y])
+    @cells[point[0]][point[1]] = value
+
+  get:(x, y) ->
+    point = this.modulo([x, y])
+    @cells[point[0]][point[1]]
 
   modulo: (point) ->
     x = point[0]
@@ -30,7 +37,8 @@ class gameOfLife.Game
   nextRound:() ->
     this.strategy.nextRound()
 
-class gameOfLife.Strategy
+
+class gameOfLife.GameOfLifeStrategy
   constructor:(@game) ->
 
   nextRound:() ->
@@ -63,8 +71,7 @@ class gameOfLife.Strategy
     ]
     livingNeighbours = 0
     for n in nbs
-      n = @game.modulo(n)
-      livingNeighbours = livingNeighbours + 1 if @game.cells[n[0]][n[1]]
+      livingNeighbours = livingNeighbours + 1 if @game.get(n[0],n[1])
     livingNeighbours
 
 
