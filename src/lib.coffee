@@ -3,14 +3,6 @@ class gameOfLife.Game
   @LIVE = true
   @DEAD = false
 
-  constructor:(numOfColumns, numOfRows) ->
-    @board = new gameOfLife.Board(numOfColumns, numOfRows)
-
-
-  nextRound: ->
-    @board.move()
-
-class gameOfLife.Board
   constructor:(@numOfColumns, @numOfRows) ->
     @deads = []
     @lives = []
@@ -34,12 +26,12 @@ class gameOfLife.Board
     y = y % @numOfRows
     {x, y}
 
-  move:() ->
+  nextRound:() ->
     #this.simpleGlider()
-    this.gameOfLife()
+    this.nextRoundOfgameOfLife()
 
 
-  gameOfLife:() ->
+  nextRoundOfgameOfLife:() ->
     newLives = []
     starving = []
 
@@ -96,17 +88,16 @@ class gameOfLife.Drawer
   constructor:(@game, @factor) ->
 
   drawGrid:(context) ->
-    width = @game.board.numOfColumns * @factor
-    height = @game.board.numOfRows * @factor
+    width = @game.numOfColumns * @factor
+    height = @game.numOfRows * @factor
 
     context.beginPath()
-    board = @game.board
-    for rowNum in [0..board.numOfRows]
+    for rowNum in [0..@game.numOfRows]
     #  for item in row
       y = rowNum * @factor + 0.5
       context.moveTo(0,y)
       context.lineTo(width,y)
-    for colNum in [0..board.numOfColumns]
+    for colNum in [0..@game.numOfColumns]
       x = colNum * @factor + 0.5
       context.moveTo(x,0)
       context.lineTo(x, height)
@@ -116,10 +107,10 @@ class gameOfLife.Drawer
 
   draw:(context) ->
     context.fillStyle = "white"
-    for dead in @game.board.deads
+    for dead in @game.deads
       this.drawRect(context, dead)
     context.fillStyle = "black"
-    for live in @game.board.lives
+    for live in @game.lives
       this.drawRect(context, live)
 
   drawRect:(context, rect) ->

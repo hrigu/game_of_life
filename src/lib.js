@@ -9,20 +9,6 @@
     Game.DEAD = false;
 
     function Game(numOfColumns, numOfRows) {
-      this.board = new gameOfLife.Board(numOfColumns, numOfRows);
-    }
-
-    Game.prototype.nextRound = function() {
-      return this.board.move();
-    };
-
-    return Game;
-
-  })();
-
-  gameOfLife.Board = (function() {
-
-    function Board(numOfColumns, numOfRows) {
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
@@ -38,14 +24,14 @@
       }
     }
 
-    Board.prototype.setLive = function(x, y) {
+    Game.prototype.setLive = function(x, y) {
       var point;
       point = this.createPoint(x, y);
       this.lives.push(point);
       return this.cells[point.x][point.y] = gameOfLife.Game.LIVE;
     };
 
-    Board.prototype.createPoint = function(x, y) {
+    Game.prototype.createPoint = function(x, y) {
       if (y < 0) y = this.numOfRows + y;
       if (x < 0) x = this.numOfColumns + x;
       x = x % this.numOfColumns;
@@ -56,11 +42,11 @@
       };
     };
 
-    Board.prototype.move = function() {
-      return this.gameOfLife();
+    Game.prototype.nextRound = function() {
+      return this.nextRoundOfgameOfLife();
     };
 
-    Board.prototype.gameOfLife = function() {
+    Game.prototype.nextRoundOfgameOfLife = function() {
       var dead, live, newLives, starving, x, y, _i, _j, _len, _len2, _ref, _ref2, _ref3, _ref4, _results;
       newLives = [];
       starving = [];
@@ -95,7 +81,7 @@
       return _results;
     };
 
-    Board.prototype.numOfLivingNeighbours = function(x, y) {
+    Game.prototype.numOfLivingNeighbours = function(x, y) {
       var livingNeighbours, n, neighbours, _i, _len;
       neighbours = [this.createPoint(x - 1, y - 1), this.createPoint(x - 1, y), this.createPoint(x - 1, y + 1), this.createPoint(x, y - 1), this.createPoint(x, y + 1), this.createPoint(x + 1, y - 1), this.createPoint(x + 1, y), this.createPoint(x + 1, y + 1)];
       livingNeighbours = 0;
@@ -106,7 +92,7 @@
       return livingNeighbours;
     };
 
-    Board.prototype.simpleGlider = function() {
+    Game.prototype.simpleGlider = function() {
       var dead, live, newLives, x, y, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _results;
       newLives = [];
       _ref = this.lives;
@@ -132,11 +118,11 @@
       return _results;
     };
 
-    Board.prototype.randomNumber = function(min, max) {
+    Game.prototype.randomNumber = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
-    return Board;
+    return Game;
 
   })();
 
@@ -148,17 +134,16 @@
     }
 
     Drawer.prototype.drawGrid = function(context) {
-      var board, colNum, height, rowNum, width, x, y, _ref, _ref2;
-      width = this.game.board.numOfColumns * this.factor;
-      height = this.game.board.numOfRows * this.factor;
+      var colNum, height, rowNum, width, x, y, _ref, _ref2;
+      width = this.game.numOfColumns * this.factor;
+      height = this.game.numOfRows * this.factor;
       context.beginPath();
-      board = this.game.board;
-      for (rowNum = 0, _ref = board.numOfRows; 0 <= _ref ? rowNum <= _ref : rowNum >= _ref; 0 <= _ref ? rowNum++ : rowNum--) {
+      for (rowNum = 0, _ref = this.game.numOfRows; 0 <= _ref ? rowNum <= _ref : rowNum >= _ref; 0 <= _ref ? rowNum++ : rowNum--) {
         y = rowNum * this.factor + 0.5;
         context.moveTo(0, y);
         context.lineTo(width, y);
       }
-      for (colNum = 0, _ref2 = board.numOfColumns; 0 <= _ref2 ? colNum <= _ref2 : colNum >= _ref2; 0 <= _ref2 ? colNum++ : colNum--) {
+      for (colNum = 0, _ref2 = this.game.numOfColumns; 0 <= _ref2 ? colNum <= _ref2 : colNum >= _ref2; 0 <= _ref2 ? colNum++ : colNum--) {
         x = colNum * this.factor + 0.5;
         context.moveTo(x, 0);
         context.lineTo(x, height);
@@ -170,13 +155,13 @@
     Drawer.prototype.draw = function(context) {
       var dead, live, _i, _j, _len, _len2, _ref, _ref2, _results;
       context.fillStyle = "white";
-      _ref = this.game.board.deads;
+      _ref = this.game.deads;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         dead = _ref[_i];
         this.drawRect(context, dead);
       }
       context.fillStyle = "black";
-      _ref2 = this.game.board.lives;
+      _ref2 = this.game.lives;
       _results = [];
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
         live = _ref2[_j];
