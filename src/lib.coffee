@@ -13,7 +13,7 @@ class gameOfLife.Game
 
 
   setLive: (x, y) ->
-    point = modulo([x, y])
+    point = this.modulo([x, y])
     @cells[point[0]][point[1]] = gameOfLife.Game.LIVE
 
 
@@ -60,7 +60,7 @@ class gameOfLife.Game
     ]
     livingNeighbours = 0
     for n in nbs
-      n = modulo(n)
+      n = this.modulo(n)
       livingNeighbours = livingNeighbours + 1 if @cells[n[0]][n[1]]
     livingNeighbours
 

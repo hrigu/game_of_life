@@ -23,18 +23,20 @@
     }
 
     Game.prototype.setLive = function(x, y) {
-      return this.cells[x][y] = gameOfLife.Game.LIVE;
+      var point;
+      point = this.modulo([x, y]);
+      return this.cells[point[0]][point[1]] = gameOfLife.Game.LIVE;
     };
 
-    Game.prototype.createPoint = function(x, y) {
-      if (y < 0) y = this.numOfRows + y;
+    Game.prototype.modulo = function(point) {
+      var x, y;
+      x = point[0];
       if (x < 0) x = this.numOfColumns + x;
       x = x % this.numOfColumns;
+      y = point[1];
+      if (y < 0) y = this.numOfRows + y;
       y = y % this.numOfRows;
-      return {
-        x: x,
-        y: y
-      };
+      return [x, y];
     };
 
     Game.prototype.nextRound = function() {
@@ -71,13 +73,13 @@
     };
 
     Game.prototype.numOfLivingNeighbours = function(x, y) {
-      var livingNeighbours, n, nbs, p, _i, _len;
+      var livingNeighbours, n, nbs, _i, _len;
       nbs = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]];
       livingNeighbours = 0;
       for (_i = 0, _len = nbs.length; _i < _len; _i++) {
         n = nbs[_i];
-        p = this.createPoint(n[0], n[1]);
-        if (this.cells[p.x][p.y]) livingNeighbours = livingNeighbours + 1;
+        n = this.modulo(n);
+        if (this.cells[n[0]][n[1]]) livingNeighbours = livingNeighbours + 1;
       }
       return livingNeighbours;
     };
