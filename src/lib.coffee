@@ -37,8 +37,7 @@ class gameOfLife.Game
   nextRound:() ->
     this.strategy.nextRound()
 
-
-class gameOfLife.GameOfLifeStrategy
+class gameOfLife.Strategy
   constructor:(@game) ->
 
   nextRound:() ->
@@ -48,19 +47,31 @@ class gameOfLife.GameOfLifeStrategy
     for x in [0..@game.numOfColumns-1]
       for y in [0..@game.numOfRows-1]
         if (@game.cells[x][y])
-          if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
-            lives.push([x, y])
-          else
-            deads.push [x, y]
-
+          this.handleLifeCell(x, y, lives, deads)
         else
-          if (this.numOfLivingNeighbours(x, y) == 3)
-            lives.push([x, y])
-
+          this.handleDeadCell(x, y, lives, deads)
     for dead in deads
       @game.cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD
     for live in lives
       @game.cells[live[0]][live[1]] = gameOfLife.Game.LIVE
+
+  handleLifeCell:(x, y, lives, deads) ->
+
+  handleDeadCell:(x, y, lives, deads) ->
+
+
+
+class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
+
+  handleLifeCell:(x, y, lives, deads) ->
+    if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
+      lives.push([x, y])
+    else
+      deads.push [x, y]
+
+  handleDeadCell:(x, y, lives, deads) ->
+    if (this.numOfLivingNeighbours(x, y) == 3)
+       lives.push([x, y])
 
 
   numOfLivingNeighbours:(x, y) ->
