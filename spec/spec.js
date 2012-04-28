@@ -66,49 +66,4 @@
     });
   });
 
-  describe("GameOfLifeStrategy", function() {
-    var game, strategy;
-    game = null;
-    strategy = null;
-    beforeEach(function() {
-      game = new gameOfLife.Game(3, 3);
-      return strategy = new gameOfLife.GameOfLifeStrategy(game);
-    });
-    return describe("numOfLivingNeighbours", function() {
-      describe("no living neighburs", function() {
-        return it("should return 0", function() {
-          game.set(1, 1);
-          return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(0);
-        });
-      });
-      describe("1 living neighburs", function() {
-        return it("should return 1", function() {
-          game.set(0, 1);
-          return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(1);
-        });
-      });
-      describe("3 living neighburs", function() {
-        return it("should return 3", function() {
-          game.set(0, 1);
-          game.set(0, 0);
-          game.set(2, 2);
-          return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(3);
-        });
-      });
-      return describe("8 living neighburs", function() {
-        return it("should return 8", function() {
-          game.set(0, 0);
-          game.set(0, 1);
-          game.set(0, 2);
-          game.set(1, 0);
-          game.set(1, 2);
-          game.set(2, 0);
-          game.set(2, 1);
-          game.set(2, 2);
-          return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(8);
-        });
-      });
-    });
-  });
-
 }).call(this);

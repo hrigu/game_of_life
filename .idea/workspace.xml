@@ -35,7 +35,7 @@
       <file leaf-file-name="lib.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lib.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="17" selection-start="1475" selection-end="1475" vertical-scroll-proportion="0.94684386">
+            <state line="7" column="47" selection-start="168" selection-end="168" vertical-scroll-proportion="-0.4950166">
               <folding />
             </state>
           </provider>
@@ -44,7 +44,7 @@
       <file leaf-file-name="spec.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="52" selection-start="784" selection-end="784" vertical-scroll-proportion="-4.909091">
+            <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="-12.818182">
               <folding />
             </state>
           </provider>
@@ -62,8 +62,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/script.js" />
         <option value="$PROJECT_DIR$/src/script.coffee" />
-        <option value="$PROJECT_DIR$/src/lib.coffee" />
         <option value="$PROJECT_DIR$/spec/spec.coffee" />
+        <option value="$PROJECT_DIR$/src/lib.coffee" />
       </list>
     </option>
   </component>
@@ -294,7 +294,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="52" selection-start="784" selection-end="784" vertical-scroll-proportion="-4.909091">
+        <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="-12.818182">
           <folding />
         </state>
       </provider>
@@ -308,7 +308,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="17" selection-start="1475" selection-end="1475" vertical-scroll-proportion="0.94684386">
+        <state line="7" column="47" selection-start="168" selection-end="168" vertical-scroll-proportion="-0.4950166">
           <folding />
         </state>
       </provider>

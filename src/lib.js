@@ -14,7 +14,7 @@
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
+      this.strategy = new gameOfLife.DiagonalStrategy(this);
       this.cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
@@ -105,43 +105,6 @@
     };
 
     return DiagonalStrategy;
-
-  })(gameOfLife.Strategy);
-
-  gameOfLife.GameOfLifeStrategy = (function(_super) {
-
-    __extends(GameOfLifeStrategy, _super);
-
-    function GameOfLifeStrategy() {
-      GameOfLifeStrategy.__super__.constructor.apply(this, arguments);
-    }
-
-    GameOfLifeStrategy.prototype.handleAliveCell = function(x, y, changes) {
-      if (this.numOfLivingNeighbours(x, y) === 2 || this.numOfLivingNeighbours(x, y) === 3) {
-        return changes.push([x, y, true]);
-      } else {
-        return changes.push([x, y, false]);
-      }
-    };
-
-    GameOfLifeStrategy.prototype.handleDeadCell = function(x, y, changes) {
-      if (this.numOfLivingNeighbours(x, y) === 3) {
-        return changes.push([x, y, true]);
-      }
-    };
-
-    GameOfLifeStrategy.prototype.numOfLivingNeighbours = function(x, y) {
-      var livingNeighbours, n, nbs, _i, _len;
-      nbs = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]];
-      livingNeighbours = 0;
-      for (_i = 0, _len = nbs.length; _i < _len; _i++) {
-        n = nbs[_i];
-        if (this.game.get(n[0], n[1])) livingNeighbours = livingNeighbours + 1;
-      }
-      return livingNeighbours;
-    };
-
-    return GameOfLifeStrategy;
 
   })(gameOfLife.Strategy);
 

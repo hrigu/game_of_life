@@ -5,7 +5,7 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.GameOfLifeStrategy(this)
+    @strategy = new gameOfLife.DiagonalStrategy(this)
     @cells = []
     for x in [1..@numOfColumns]
       column = []
@@ -56,32 +56,6 @@ class gameOfLife.DiagonalStrategy extends gameOfLife.Strategy
   handleAliveCell:(x, y, changes) ->
     changes.push([x, y, false])
     changes.push([x+1, y+1, true])
-
-
-class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
-
-  handleAliveCell:(x, y, changes) ->
-    if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
-      changes.push([x, y, true])
-    else
-      changes.push([x, y, false])
-
-  handleDeadCell:(x, y, changes) ->
-    if (this.numOfLivingNeighbours(x, y) == 3)
-       changes.push([x, y, true])
-
-
-  numOfLivingNeighbours:(x, y) ->
-    nbs = [
-      [x-1, y-1],[x-1, y],[x-1, y+1]
-      [x, y-1], [x, y+1]
-      [x+1, y-1],[x+1, y],[x+1, y+1]
-    ]
-    livingNeighbours = 0
-    for n in nbs
-      livingNeighbours = livingNeighbours + 1 if @game.get(n[0],n[1])
-    livingNeighbours
-
 
 
 class gameOfLife.Drawer
