@@ -5,7 +5,7 @@ jQuery ->
   canvas = getCanvas()
   ctx = canvas.getContext '2d'
 
-  game = new gameOfLife.Game(40, 20)
+  game = new gameOfLife.Game(70, 50)
 
   #game.set(1, 2)
   #game.set(2, 2)
@@ -29,7 +29,7 @@ jQuery ->
 
 
 
-  drawer = new gameOfLife.Drawer(game, 10)
+  drawer = new gameOfLife.Drawer(game, 9)
   drawer.drawGrid(ctx)
   setInterval(run_loop, 100)
 

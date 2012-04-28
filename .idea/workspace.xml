@@ -26,16 +26,34 @@
       <file leaf-file-name="script.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="136" selection-start="357" selection-end="357" vertical-scroll-proportion="-6.2727275">
+            <state line="31" column="40" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lib.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="lib.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="47" selection-start="168" selection-end="168" vertical-scroll-proportion="-0.4950166">
+            <state line="47" column="91" selection-start="1097" selection-end="1097" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spec.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spec/spec.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="4" selection-start="1806" selection-end="1806" vertical-scroll-proportion="-15.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lib.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/lib.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="9" selection-start="967" selection-end="967" vertical-scroll-proportion="-1.4941038">
               <folding />
             </state>
           </provider>
@@ -44,7 +62,7 @@
       <file leaf-file-name="spec.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="-12.818182">
+            <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -60,10 +78,13 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/script.js" />
-        <option value="$PROJECT_DIR$/src/script.coffee" />
         <option value="$PROJECT_DIR$/spec/spec.coffee" />
         <option value="$PROJECT_DIR$/src/lib.coffee" />
+        <option value="$PROJECT_DIR$/src/script.coffee" />
+        <option value="$PROJECT_DIR$/spec/spec.js" />
+        <option value="$PROJECT_DIR$/src/script.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/lib.js" />
       </list>
     </option>
   </component>
@@ -93,7 +114,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -142,15 +163,15 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="project.propVCSSupport.VCSs.Git" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
@@ -277,38 +298,51 @@
         <state line="30" column="66" selection-start="1086" selection-end="1086" vertical-scroll-proportion="-18.75" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="90" selection-start="2098" selection-end="2098" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="31" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="74" selection-start="355" selection-end="355" vertical-scroll-proportion="-6.875" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="-12.818182">
+        <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/script.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="136" selection-start="357" selection-end="357" vertical-scroll-proportion="-6.2727275">
+        <state line="31" column="40" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="39" selection-start="301" selection-end="301" vertical-scroll-proportion="0.13651878">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="43" selection-start="256" selection-end="256" vertical-scroll-proportion="0.13289036">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/spec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="4" selection-start="1806" selection-end="1806" vertical-scroll-proportion="-15.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="47" selection-start="168" selection-end="168" vertical-scroll-proportion="-0.4950166">
+        <state line="47" column="91" selection-start="1097" selection-end="1097" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="9" selection-start="967" selection-end="967" vertical-scroll-proportion="-1.4941038">
           <folding />
         </state>
       </provider>
