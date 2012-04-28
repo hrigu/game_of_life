@@ -49,36 +49,35 @@
         for (y = 0, _ref2 = this.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
           if (this.cells[x][y]) {
             if (this.numOfLivingNeighbours(x, y) === 2 || this.numOfLivingNeighbours(x, y) === 3) {
-              lives.push(this.createPoint(x, y));
+              lives.push([x, y]);
             } else {
-              deads.push(this.createPoint(x, y));
+              deads.push([x, y]);
             }
           } else {
-            if (this.numOfLivingNeighbours(x, y) === 3) {
-              lives.push(this.createPoint(x, y));
-            }
+            if (this.numOfLivingNeighbours(x, y) === 3) lives.push([x, y]);
           }
         }
       }
       for (_i = 0, _len = deads.length; _i < _len; _i++) {
         dead = deads[_i];
-        this.cells[dead.x][dead.y] = gameOfLife.Game.DEAD;
+        this.cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD;
       }
       _results = [];
       for (_j = 0, _len2 = lives.length; _j < _len2; _j++) {
         live = lives[_j];
-        _results.push(this.cells[live.x][live.y] = gameOfLife.Game.LIVE);
+        _results.push(this.cells[live[0]][live[1]] = gameOfLife.Game.LIVE);
       }
       return _results;
     };
 
     Game.prototype.numOfLivingNeighbours = function(x, y) {
-      var livingNeighbours, n, neighbours, _i, _len;
-      neighbours = [this.createPoint(x - 1, y - 1), this.createPoint(x - 1, y), this.createPoint(x - 1, y + 1), this.createPoint(x, y - 1), this.createPoint(x, y + 1), this.createPoint(x + 1, y - 1), this.createPoint(x + 1, y), this.createPoint(x + 1, y + 1)];
+      var livingNeighbours, n, nbs, p, _i, _len;
+      nbs = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]];
       livingNeighbours = 0;
-      for (_i = 0, _len = neighbours.length; _i < _len; _i++) {
-        n = neighbours[_i];
-        if (this.cells[n.x][n.y]) livingNeighbours = livingNeighbours + 1;
+      for (_i = 0, _len = nbs.length; _i < _len; _i++) {
+        n = nbs[_i];
+        p = this.createPoint(n[0], n[1]);
+        if (this.cells[p.x][p.y]) livingNeighbours = livingNeighbours + 1;
       }
       return livingNeighbours;
     };

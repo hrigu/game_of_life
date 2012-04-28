@@ -35,27 +35,30 @@ class gameOfLife.Game
       for y in [0..@numOfRows-1]
         if (@cells[x][y])
           if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
-            lives.push(this.createPoint(x, y))
+            lives.push([x, y])
           else
-            deads.push this.createPoint(x, y)
+            deads.push [x, y]
 
         else
           if (this.numOfLivingNeighbours(x, y) == 3)
-            lives.push(this.createPoint(x, y))
+            lives.push([x, y])
 
     for dead in deads
-      @cells[dead.x][dead.y] = gameOfLife.Game.DEAD
+      @cells[dead[0]][dead[1]] = gameOfLife.Game.DEAD
     for live in lives
-      @cells[live.x][live.y] = gameOfLife.Game.LIVE
+      @cells[live[0]][live[1]] = gameOfLife.Game.LIVE
 
 
   numOfLivingNeighbours:(x, y) ->
-    neighbours = [this.createPoint(x-1, y-1), this.createPoint(x-1, y), this.createPoint(x-1, y+1),
-      this.createPoint(x, y-1), this.createPoint(x, y+1),
-      this.createPoint(x+1, y-1), this.createPoint(x+1, y), this.createPoint(x+1, y+1)]
+    nbs = [
+      [x-1, y-1],[x-1, y],[x-1, y+1]
+      [x, y-1], [x, y+1]
+      [x+1, y-1],[x+1, y],[x+1, y+1]
+    ]
     livingNeighbours = 0
-    for n in neighbours
-      livingNeighbours = livingNeighbours + 1 if @cells[n.x][n.y]
+    for n in nbs
+      p = this.createPoint(n[0], n[1])
+      livingNeighbours = livingNeighbours + 1 if @cells[p.x][p.y]
     livingNeighbours
 
 
@@ -68,7 +71,6 @@ class gameOfLife.Drawer
 
     context.beginPath()
     for rowNum in [0..@game.numOfRows]
-    #  for item in row
       y = rowNum * @factor + 0.5
       context.moveTo(0,y)
       context.lineTo(width,y)
