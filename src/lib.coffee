@@ -42,25 +42,25 @@ class gameOfLife.Strategy
     for x in [0..@game.numOfColumns-1]
       for y in [0..@game.numOfRows-1]
         if (@game.cells[x][y])
-          this.handleLifeCell(x, y, changes)
+          this.handleAliveCell(x, y, changes)
         else
           this.handleDeadCell(x, y, changes)
     for change in changes
       @game.set(change[0], change[1], change[2])
 
-  handleLifeCell:(x, y, changes) ->
+  handleAliveCell:(x, y, changes) ->
 
   handleDeadCell:(x, y, changes) ->
 
 class gameOfLife.DiagonalStrategy extends gameOfLife.Strategy
-  handleLifeCell:(x, y, changes) ->
+  handleAliveCell:(x, y, changes) ->
     changes.push([x, y, false])
     changes.push([x+1, y+1, true])
 
 
 class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
 
-  handleLifeCell:(x, y, changes) ->
+  handleAliveCell:(x, y, changes) ->
     if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
       changes.push([x, y, true])
     else

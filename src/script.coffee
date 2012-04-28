@@ -17,6 +17,7 @@ jQuery ->
   setGlider(10, 2, game)
   setGlider(15, 2, game)
   setGlider(20, 2, game)
+  setGlider(23, 3, game)
   setGlider(25, 2, game)
 
 
