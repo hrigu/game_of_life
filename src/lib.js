@@ -14,7 +14,7 @@
       var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.DiagonalStrategy(this);
+      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
       this.cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
@@ -25,12 +25,9 @@
       }
     }
 
-    Game.prototype.setLive = function(x, y) {
-      return this.set(x, y, gameOfLife.Game.LIVE);
-    };
-
     Game.prototype.set = function(x, y, value) {
       var point;
+      if (value == null) value = gameOfLife.Game.LIVE;
       point = this.modulo([x, y]);
       return this.cells[point[0]][point[1]] = value;
     };

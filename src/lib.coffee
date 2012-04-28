@@ -5,7 +5,7 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.DiagonalStrategy(this)
+    @strategy = new gameOfLife.GameOfLifeStrategy(this)
     @cells = []
     for x in [1..@numOfColumns]
       column = []
@@ -13,11 +13,7 @@ class gameOfLife.Game
         column.push(gameOfLife.Game.DEAD)
       @cells.push column
 
-
-  setLive: (x, y) ->
-    this.set(x, y, gameOfLife.Game.LIVE)
-
-  set:(x, y, value) ->
+  set:(x, y, value = gameOfLife.Game.LIVE) ->
     point = this.modulo([x, y])
     @cells[point[0]][point[1]] = value
 

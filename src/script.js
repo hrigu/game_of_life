@@ -1,5 +1,5 @@
 (function() {
-  var ctx, drawer, game, getCanvas, run_loop;
+  var ctx, drawer, game, getCanvas, run_loop, setGlider;
 
   game = null;
 
@@ -12,16 +12,11 @@
     canvas = getCanvas();
     ctx = canvas.getContext('2d');
     game = new gameOfLife.Game(40, 20);
-    game.setLive(2, 1);
-    game.setLive(3, 2);
-    game.setLive(1, 3);
-    game.setLive(2, 3);
-    game.setLive(3, 3);
-    game.setLive(22, 1);
-    game.setLive(23, 2);
-    game.setLive(21, 3);
-    game.setLive(22, 3);
-    game.setLive(23, 3);
+    setGlider(5, 2, game);
+    setGlider(10, 2, game);
+    setGlider(15, 2, game);
+    setGlider(20, 2, game);
+    setGlider(25, 2, game);
     drawer = new gameOfLife.Drawer(game, 10);
     drawer.drawGrid(ctx);
     return setInterval(run_loop, 100);
@@ -34,6 +29,14 @@
 
   getCanvas = function() {
     return $("#myCanvas")[0];
+  };
+
+  setGlider = function(x, y, game) {
+    game.set(x, y);
+    game.set(x + 1, y + 1);
+    game.set(x - 1, y + 2);
+    game.set(x, y + 2);
+    return game.set(x + 1, y + 2);
   };
 
 }).call(this);
