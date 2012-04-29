@@ -30,22 +30,13 @@
             this.cells[x][y] = value;
         };
 
-
-        //returns the value of a specific cell.
-        Game.prototype.get = function(x, y) {
-            var point;
-            return this.cells[point[0]][point[1]];
-        };
-
-
         Game.prototype.nextRound = function() {
             var changes = [];
             for (var x = 0; x < this.numOfColumns; x++) {
                 for (var y = 0; y < this.numOfRows; y++) {
                     if (this.cells[x][y]) {
-                        this.handleAliveCell(x, y, changes);
-                    } else {
-                        this.handleDeadCell(x, y, changes);
+                        changes.push([x, y, false]);
+                        changes.push([x + 1, y + 1, true]);
                     }
                 }
             }
@@ -53,13 +44,6 @@
                 var change = changes[i];
                 this.set(change[0], change[1], change[2]);
             }
-        };
-
-        Game.prototype.handleAliveCell = function(x, y, changes) {
-            changes.push([x, y, false]);
-            changes.push([x + 1, y + 1, true]);
-        };
-        Game.prototype.handleDeadCell = function(x, y, changes) {
         };
 
         return Game;

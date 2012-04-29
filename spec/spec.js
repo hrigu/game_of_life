@@ -31,49 +31,15 @@ describe("Game", function() {
 
     describe("nextRound", function() {
         beforeEach(function() {
-            game = new gameOfLife.Game(1, 2);
-            spyOn(game, "handleDeadCell");
-            spyOn(game, "handleAliveCell");
-        });
-        it("should visit every cell", function() {
-            game.nextRound();
-            expect(game.handleDeadCell.callCount).toBe(2);
-        });
-
-        it("should call 'handleDeadCell' for all dead cell", function() {
-            var changes = [];
-            game.set(0, 0);
-            game.nextRound();
-            expect(game.handleDeadCell.callCount).toBe(1);
-            expect(game.handleDeadCell).toHaveBeenCalledWith(0, 1, changes);
-        });
-
-        it("should call 'handleAliveCell' for all live cell", function() {
-            var changes = [];
-            game.set(0, 0);
-            game.nextRound();
-            expect(game.handleAliveCell.callCount).toBe(1);
-            expect(game.handleAliveCell).toHaveBeenCalledWith(0, 0, changes);
-        });
-    });
-
-    describe("handleAliveCell", function() {
-        beforeEach(function() {
-            game = new gameOfLife.Game(1, 2);
+            game = new gameOfLife.Game(2, 2);
         });
         it("should kill the actual cell and make the neighbour right-beneath to live", function() {
             game.set(0, 0);
-            var changes = [];
-            game.handleAliveCell(0, 0, changes)
-            expect(changes.length).toBe(2);
+            game.nextRound()
             //actual
-            expect(changes[0][0]).toBe(0);
-            expect(changes[0][1]).toBe(0);
-            expect(changes[0][2]).toBe(gameOfLife.Game.DEAD);
+            expect(game.cells[0][0]).toBe(gameOfLife.Game.DEAD);
             //neighbour
-            expect(changes[1][0]).toBe(1);
-            expect(changes[1][1]).toBe(1);
-            expect(changes[1][2]).toBe(gameOfLife.Game.LIVE);
+            expect(game.cells[1][1]).toBe(gameOfLife.Game.LIVE);
 
         })
     });

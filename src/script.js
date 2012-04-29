@@ -4,7 +4,7 @@ jQuery(function() {
     var canvas;
     canvas = getCanvas();
     ctx = canvas.getContext('2d');
-    game = new gameOfLife.Game(70, 50);
+    game = new gameOfLife.Game(20, 10);
     game.set(0, 0);
     drawer = new gameOfLife.Drawer(game, 10);
     drawer.drawGrid(ctx);
