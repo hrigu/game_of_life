@@ -32,57 +32,44 @@ describe("Game", function() {
             });
         });
     });
-});
 
-describe("Strategy", function() {
-    var game = null;
-    var strategy = null;
-
-    beforeEach(function() {
-        game = new gameOfLife.Game(1, 2);
-        strategy = new gameOfLife.Strategy(game);
-        spyOn(strategy, "handleDeadCell");
-        spyOn(strategy, "handleAliveCell");
-    });
 
     describe("nextRound", function() {
+        beforeEach(function() {
+            game = new gameOfLife.Game(1, 2);
+            spyOn(game, "handleDeadCell");
+            spyOn(game, "handleAliveCell");
+        });
         it("should visit every cell", function() {
-            strategy.nextRound();
-            expect(strategy.handleDeadCell.callCount).toBe(2);
+            game.nextRound();
+            expect(game.handleDeadCell.callCount).toBe(2);
         });
 
         it("should call 'handleDeadCell' for all dead cell", function() {
             var changes = [];
             game.set(0, 0);
-            strategy.nextRound();
-            expect(strategy.handleDeadCell.callCount).toBe(1);
-            expect(strategy.handleDeadCell).toHaveBeenCalledWith(0, 1, changes);
+            game.nextRound();
+            expect(game.handleDeadCell.callCount).toBe(1);
+            expect(game.handleDeadCell).toHaveBeenCalledWith(0, 1, changes);
         });
 
         it("should call 'handleAliveCell' for all live cell", function() {
             var changes = [];
             game.set(0, 0);
-            strategy.nextRound();
-            expect(strategy.handleAliveCell.callCount).toBe(1);
-            expect(strategy.handleAliveCell).toHaveBeenCalledWith(0, 0, changes);
+            game.nextRound();
+            expect(game.handleAliveCell.callCount).toBe(1);
+            expect(game.handleAliveCell).toHaveBeenCalledWith(0, 0, changes);
         });
     });
-});
 
-describe("DiagonalStrategy", function() {
-    var game = null;
-    var strategy = null;
-
-    beforeEach(function() {
-        game = new gameOfLife.Game(1, 2);
-        strategy = new gameOfLife.DiagonalStrategy(game);
-    });
-
-    describe ("handleAliveCell", function(){
-        it("should kill the actual cell and make the neighbour right-beneath to live", function(){
+    describe("handleAliveCell", function() {
+        beforeEach(function() {
+            game = new gameOfLife.Game(1, 2);
+        });
+        it("should kill the actual cell and make the neighbour right-beneath to live", function() {
             game.set(0, 0);
             var changes = [];
-            strategy.handleAliveCell(0, 0, changes)
+            game.handleAliveCell(0, 0, changes)
             expect(changes.length).toBe(2);
             //actual
             expect(changes[0][0]).toBe(0);

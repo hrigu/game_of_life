@@ -30,7 +30,6 @@
         function Game(numOfColumns, numOfRows) {
             this.numOfColumns = numOfColumns;
             this.numOfRows = numOfRows;
-            this.strategy = new gameOfLife.DiagonalStrategy(this);
             this.cells = [];
             for (var x = 0; x < this.numOfColumns; x++) {
                 var column = [];
@@ -57,7 +56,7 @@
             return this.cells[point[0]][point[1]];
         };
 
-        //handles the fact that points can be outside the board. They are mapped into the board.
+        //handles the fact that points can be outside of the board. They are mapped into the board.
         Game.prototype.modulo = function(point) {
             var x = point[0];
             if (x < 0) x += this.numOfColumns;
@@ -69,26 +68,10 @@
         };
 
         Game.prototype.nextRound = function() {
-            this.strategy.nextRound();
-        };
-
-        return Game;
-
-    })();
-
-    //superclass of all strategies.
-    gameOfLife.Strategy = (function() {
-
-        function Strategy(game) {
-            this.game = game;
-        }
-
-        //iterates over all cells and delegates the actual work to the handleAliveCell and the handleDeadCell function
-        Strategy.prototype.nextRound = function() {
             var changes = [];
-            for (var x = 0; x < this.game.numOfColumns; x++) {
-                for (var y = 0; y < this.game.numOfRows; y++) {
-                    if (this.game.cells[x][y]) {
+            for (var x = 0; x < this.numOfColumns; x++) {
+                for (var y = 0; y < this.numOfRows; y++) {
+                    if (this.cells[x][y]) {
                         this.handleAliveCell(x, y, changes);
                     } else {
                         this.handleDeadCell(x, y, changes);
@@ -97,38 +80,20 @@
             }
             for (var i = 0; i < changes.length; i++) {
                 var change = changes[i];
-                this.game.set(change[0], change[1], change[2]);
+                this.set(change[0], change[1], change[2]);
             }
         };
 
-        Strategy.prototype.handleAliveCell = function(x, y, changes) {
-        };
-        Strategy.prototype.handleDeadCell = function(x, y, changes) {
-        };
-
-        return Strategy;
-
-    })();
-
-
-    //This simple strategy makes the live cells walking diagonal over the board
-    gameOfLife.DiagonalStrategy = (function(_super) {
-
-        __extends(DiagonalStrategy, _super);
-
-        function DiagonalStrategy() {
-            DiagonalStrategy.__super__.constructor.apply(this, arguments);
-        }
-
-        DiagonalStrategy.prototype.handleAliveCell = function(x, y, changes) {
+        Game.prototype.handleAliveCell = function(x, y, changes) {
             changes.push([x, y, false]);
             changes.push([x + 1, y + 1, true]);
         };
+        Game.prototype.handleDeadCell = function(x, y, changes) {
+        };
 
-        return DiagonalStrategy;
+        return Game;
 
-    })(gameOfLife.Strategy);
-
+    })();
 
     //responsible to draw the game to the canvas
     gameOfLife.Drawer = (function() {
