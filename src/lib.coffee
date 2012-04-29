@@ -5,13 +5,23 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.GameOfLifeStrategy(this)
-    @cells = []
+    @strategy = new gameOfLife.BrownMovingStrategy(this)
+    @cells = this.initCells()
+    @oldCells = this.initCells()
+
+  initCells: ->
+    cells = []
     for x in [1..@numOfColumns]
       column = []
       for y in [1..@numOfRows]
         column.push(gameOfLife.Game.DEAD)
-      @cells.push column
+      cells.push column
+    cells
+
+  reset:(cells) ->
+    for x in [0..@numOfColumns - 1]
+      for y in [0..@numOfRows - 1]
+        cells[x][y] = gameOfLife.Game.DEAD
 
   set:(x, y, value = gameOfLife.Game.LIVE) ->
     point = this.modulo([x, y])
@@ -20,6 +30,10 @@ class gameOfLife.Game
   get:(x, y) ->
     point = this.modulo([x, y])
     @cells[point[0]][point[1]]
+
+  getOld:(x, y) ->
+    point = this.modulo([x, y])
+    @oldCells[point[0]][point[1]]
 
   modulo: (point) ->
     x = point[0]
@@ -37,38 +51,39 @@ class gameOfLife.Strategy
   constructor:(@game) ->
 
   nextRound:() ->
-    changes = []
-
+    this.prepareBoard()
     for x in [0..@game.numOfColumns-1]
       for y in [0..@game.numOfRows-1]
-        if (@game.cells[x][y])
-          this.handleAliveCell(x, y, changes)
+        if (@game.oldCells[x][y])
+          this.handleAliveCell(x, y)
         else
-          this.handleDeadCell(x, y, changes)
-    for change in changes
-      @game.set(change[0], change[1], change[2])
+          this.handleDeadCell(x, y)
 
-  handleAliveCell:(x, y, changes) ->
+  prepareBoard:() ->
+    newCells = @game.oldCells
+    @game.oldCells = @game.cells
+    @game.cells = newCells
+    @game.reset(@game.cells)
 
-  handleDeadCell:(x, y, changes) ->
+  handleAliveCell:(x, y) ->
+
+  handleDeadCell:(x, y) ->
 
 class gameOfLife.DiagonalStrategy extends gameOfLife.Strategy
-  handleAliveCell:(x, y, changes) ->
-    changes.push([x, y, false])
-    changes.push([x+1, y+1, true])
+  handleAliveCell:(x, y) ->
+    @game.set(x+1, y+1)
 
 
 class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
 
-  handleAliveCell:(x, y, changes) ->
-    if (this.numOfLivingNeighbours(x, y) == 2 or this.numOfLivingNeighbours(x, y) == 3)
-      changes.push([x, y, true])
-    else
-      changes.push([x, y, false])
+  handleAliveCell:(x, y) ->
+    numOfLivingNeighbours = this.numOfLivingNeighbours(x, y)
+    if ( numOfLivingNeighbours == 2 or numOfLivingNeighbours == 3)
+      @game.set(x, y, true)
 
-  handleDeadCell:(x, y, changes) ->
+  handleDeadCell:(x, y) ->
     if (this.numOfLivingNeighbours(x, y) == 3)
-       changes.push([x, y, true])
+      @game.set(x, y, true)
 
 
   numOfLivingNeighbours:(x, y) ->
@@ -79,9 +94,32 @@ class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
     ]
     livingNeighbours = 0
     for n in nbs
-      livingNeighbours = livingNeighbours + 1 if @game.get(n[0],n[1])
+      livingNeighbours = livingNeighbours + 1 if @game.getOld(n[0],n[1])
     livingNeighbours
 
+class gameOfLife.BrownMovingStrategy extends gameOfLife.Strategy
+
+  handleAliveCell:(x, y) ->
+    deads = this.deadNeighbours(x, y)
+    if deads.length > 0
+      r = this.randomNumber(0, deads.length - 1)
+      @game.set(deads[r][0],deads[r][1])
+    else
+      @game.set(x, y, true)
+
+  randomNumber:(min, max) ->
+    Math.floor(Math.random()*(max-min+1)+ min)
+
+  deadNeighbours:(x, y) ->
+    nbs = [
+      [x-1, y-1],[x-1, y],[x-1, y+1]
+      [x, y-1], [x, y+1]
+      [x+1, y-1],[x+1, y],[x+1, y+1]
+    ]
+    deads = []
+    for n in nbs
+      deads.push n unless (@game.getOld(n[0],n[1]) || @game.get(n[0],n[1]))
+    deads
 
 
 class gameOfLife.Drawer

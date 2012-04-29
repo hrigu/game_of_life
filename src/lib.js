@@ -11,19 +11,41 @@
     Game.DEAD = false;
 
     function Game(numOfColumns, numOfRows) {
-      var column, x, y, _ref, _ref2;
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
-      this.cells = [];
+      this.strategy = new gameOfLife.BrownMovingStrategy(this);
+      this.cells = this.initCells();
+      this.oldCells = this.initCells();
+    }
+
+    Game.prototype.initCells = function() {
+      var cells, column, x, y, _ref, _ref2;
+      cells = [];
       for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
         column = [];
         for (y = 1, _ref2 = this.numOfRows; 1 <= _ref2 ? y <= _ref2 : y >= _ref2; 1 <= _ref2 ? y++ : y--) {
           column.push(gameOfLife.Game.DEAD);
         }
-        this.cells.push(column);
+        cells.push(column);
       }
-    }
+      return cells;
+    };
+
+    Game.prototype.reset = function(cells) {
+      var x, y, _ref, _results;
+      _results = [];
+      for (x = 0, _ref = this.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
+        _results.push((function() {
+          var _ref2, _results2;
+          _results2 = [];
+          for (y = 0, _ref2 = this.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
+            _results2.push(cells[x][y] = gameOfLife.Game.DEAD);
+          }
+          return _results2;
+        }).call(this));
+      }
+      return _results;
+    };
 
     Game.prototype.set = function(x, y, value) {
       var point;
@@ -36,6 +58,12 @@
       var point;
       point = this.modulo([x, y]);
       return this.cells[point[0]][point[1]];
+    };
+
+    Game.prototype.getOld = function(x, y) {
+      var point;
+      point = this.modulo([x, y]);
+      return this.oldCells[point[0]][point[1]];
     };
 
     Game.prototype.modulo = function(point) {
@@ -64,28 +92,37 @@
     }
 
     Strategy.prototype.nextRound = function() {
-      var change, changes, x, y, _i, _len, _ref, _ref2, _results;
-      changes = [];
-      for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
-        for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-          if (this.game.cells[x][y]) {
-            this.handleAliveCell(x, y, changes);
-          } else {
-            this.handleDeadCell(x, y, changes);
-          }
-        }
-      }
+      var x, y, _ref, _results;
+      this.prepareBoard();
       _results = [];
-      for (_i = 0, _len = changes.length; _i < _len; _i++) {
-        change = changes[_i];
-        _results.push(this.game.set(change[0], change[1], change[2]));
+      for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
+        _results.push((function() {
+          var _ref2, _results2;
+          _results2 = [];
+          for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
+            if (this.game.oldCells[x][y]) {
+              _results2.push(this.handleAliveCell(x, y));
+            } else {
+              _results2.push(this.handleDeadCell(x, y));
+            }
+          }
+          return _results2;
+        }).call(this));
       }
       return _results;
     };
 
-    Strategy.prototype.handleAliveCell = function(x, y, changes) {};
+    Strategy.prototype.prepareBoard = function() {
+      var newCells;
+      newCells = this.game.oldCells;
+      this.game.oldCells = this.game.cells;
+      this.game.cells = newCells;
+      return this.game.reset(this.game.cells);
+    };
 
-    Strategy.prototype.handleDeadCell = function(x, y, changes) {};
+    Strategy.prototype.handleAliveCell = function(x, y) {};
+
+    Strategy.prototype.handleDeadCell = function(x, y) {};
 
     return Strategy;
 
@@ -99,9 +136,8 @@
       DiagonalStrategy.__super__.constructor.apply(this, arguments);
     }
 
-    DiagonalStrategy.prototype.handleAliveCell = function(x, y, changes) {
-      changes.push([x, y, false]);
-      return changes.push([x + 1, y + 1, true]);
+    DiagonalStrategy.prototype.handleAliveCell = function(x, y) {
+      return this.game.set(x + 1, y + 1);
     };
 
     return DiagonalStrategy;
@@ -116,18 +152,16 @@
       GameOfLifeStrategy.__super__.constructor.apply(this, arguments);
     }
 
-    GameOfLifeStrategy.prototype.handleAliveCell = function(x, y, changes) {
-      if (this.numOfLivingNeighbours(x, y) === 2 || this.numOfLivingNeighbours(x, y) === 3) {
-        return changes.push([x, y, true]);
-      } else {
-        return changes.push([x, y, false]);
+    GameOfLifeStrategy.prototype.handleAliveCell = function(x, y) {
+      var numOfLivingNeighbours;
+      numOfLivingNeighbours = this.numOfLivingNeighbours(x, y);
+      if (numOfLivingNeighbours === 2 || numOfLivingNeighbours === 3) {
+        return this.game.set(x, y, true);
       }
     };
 
-    GameOfLifeStrategy.prototype.handleDeadCell = function(x, y, changes) {
-      if (this.numOfLivingNeighbours(x, y) === 3) {
-        return changes.push([x, y, true]);
-      }
+    GameOfLifeStrategy.prototype.handleDeadCell = function(x, y) {
+      if (this.numOfLivingNeighbours(x, y) === 3) return this.game.set(x, y, true);
     };
 
     GameOfLifeStrategy.prototype.numOfLivingNeighbours = function(x, y) {
@@ -136,12 +170,52 @@
       livingNeighbours = 0;
       for (_i = 0, _len = nbs.length; _i < _len; _i++) {
         n = nbs[_i];
-        if (this.game.get(n[0], n[1])) livingNeighbours = livingNeighbours + 1;
+        if (this.game.getOld(n[0], n[1])) livingNeighbours = livingNeighbours + 1;
       }
       return livingNeighbours;
     };
 
     return GameOfLifeStrategy;
+
+  })(gameOfLife.Strategy);
+
+  gameOfLife.BrownMovingStrategy = (function(_super) {
+
+    __extends(BrownMovingStrategy, _super);
+
+    function BrownMovingStrategy() {
+      BrownMovingStrategy.__super__.constructor.apply(this, arguments);
+    }
+
+    BrownMovingStrategy.prototype.handleAliveCell = function(x, y) {
+      var deads, r;
+      deads = this.deadNeighbours(x, y);
+      if (deads.length > 0) {
+        r = this.randomNumber(0, deads.length - 1);
+        return this.game.set(deads[r][0], deads[r][1]);
+      } else {
+        return this.game.set(x, y, true);
+      }
+    };
+
+    BrownMovingStrategy.prototype.randomNumber = function(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
+    BrownMovingStrategy.prototype.deadNeighbours = function(x, y) {
+      var deads, n, nbs, _i, _len;
+      nbs = [[x - 1, y - 1], [x - 1, y], [x - 1, y + 1], [x, y - 1], [x, y + 1], [x + 1, y - 1], [x + 1, y], [x + 1, y + 1]];
+      deads = [];
+      for (_i = 0, _len = nbs.length; _i < _len; _i++) {
+        n = nbs[_i];
+        if (!(this.game.getOld(n[0], n[1]) || this.game.get(n[0], n[1]))) {
+          deads.push(n);
+        }
+      }
+      return deads;
+    };
+
+    return BrownMovingStrategy;
 
   })(gameOfLife.Strategy);
 

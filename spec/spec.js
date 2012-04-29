@@ -48,20 +48,16 @@
         return expect(strategy.handleDeadCell.callCount).toBe(2);
       });
       it("should call 'handleDeadCell' for all dead cell", function() {
-        var changes;
-        changes = [];
         game.set(0, 0);
         strategy.nextRound();
         expect(strategy.handleDeadCell.callCount).toBe(1);
-        return expect(strategy.handleDeadCell).toHaveBeenCalledWith(0, 1, changes);
+        return expect(strategy.handleDeadCell).toHaveBeenCalledWith(0, 1);
       });
       return it("should call 'handleAliveCell' for all live cell", function() {
-        var changes;
-        changes = [];
         game.set(0, 0);
         strategy.nextRound();
         expect(strategy.handleAliveCell.callCount).toBe(1);
-        return expect(strategy.handleAliveCell).toHaveBeenCalledWith(0, 0, changes);
+        return expect(strategy.handleAliveCell).toHaveBeenCalledWith(0, 0);
       });
     });
   });
@@ -78,12 +74,14 @@
       describe("no living neighburs", function() {
         return it("should return 0", function() {
           game.set(1, 1);
+          strategy.prepareBoard();
           return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(0);
         });
       });
       describe("1 living neighburs", function() {
         return it("should return 1", function() {
           game.set(0, 1);
+          strategy.prepareBoard();
           return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(1);
         });
       });
@@ -92,6 +90,7 @@
           game.set(0, 1);
           game.set(0, 0);
           game.set(2, 2);
+          strategy.prepareBoard();
           return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(3);
         });
       });
@@ -105,6 +104,7 @@
           game.set(2, 0);
           game.set(2, 1);
           game.set(2, 2);
+          strategy.prepareBoard();
           return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(8);
         });
       });
@@ -121,17 +121,12 @@
     });
     return describe("handleAliveCell", function() {
       return it("should kill the actual cell and make the neighbour right-beneath to live", function() {
-        var changes;
         game.set(0, 0);
-        changes = [];
-        strategy.handleAliveCell(0, 0, changes);
-        expect(changes.length).toBe(2);
-        expect(changes[0][0]).toBe(0);
-        expect(changes[0][1]).toBe(0);
-        expect(changes[0][2]).toBe(gameOfLife.Game.DEAD);
-        expect(changes[1][0]).toBe(1);
-        expect(changes[1][1]).toBe(1);
-        return expect(changes[1][2]).toBe(gameOfLife.Game.LIVE);
+        strategy.prepareBoard();
+        strategy.handleAliveCell(0, 0);
+        expect(game.get(0, 0)).toBe(false);
+        expect(game.get(1, 1)).toBe(true);
+        return expect(game.get(1, 0)).toBe(false);
       });
     });
   });

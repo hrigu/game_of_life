@@ -35,17 +35,15 @@ describe "Strategy", ->
       strategy.nextRound()
       expect(strategy.handleDeadCell.callCount).toBe 2
     it "should call 'handleDeadCell' for all dead cell", ->
-      changes = []
       game.set(0,0)
       strategy.nextRound()
       expect(strategy.handleDeadCell.callCount).toBe 1
-      expect(strategy.handleDeadCell).toHaveBeenCalledWith(0,1,changes)
+      expect(strategy.handleDeadCell).toHaveBeenCalledWith(0,1)
     it "should call 'handleAliveCell' for all live cell", ->
-      changes = []
       game.set(0,0)
       strategy.nextRound()
       expect(strategy.handleAliveCell.callCount).toBe 1
-      expect(strategy.handleAliveCell).toHaveBeenCalledWith(0,0,changes)
+      expect(strategy.handleAliveCell).toHaveBeenCalledWith(0,0)
 
 describe "GameOfLifeStrategy", ->
   game = null
@@ -59,11 +57,13 @@ describe "GameOfLifeStrategy", ->
     describe "no living neighburs", ->
       it "should return 0", ->
         game.set(1, 1)
+        strategy.prepareBoard()
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 0
 
     describe "1 living neighburs", ->
       it "should return 1", ->
         game.set(0, 1)
+        strategy.prepareBoard()
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 1
 
     describe "3 living neighburs", ->
@@ -71,6 +71,7 @@ describe "GameOfLifeStrategy", ->
         game.set(0, 1)
         game.set(0, 0)
         game.set(2, 2)
+        strategy.prepareBoard()
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 3
 
     describe "8 living neighburs", ->
@@ -83,6 +84,7 @@ describe "GameOfLifeStrategy", ->
         game.set(2, 0)
         game.set(2, 1)
         game.set(2, 2)
+        strategy.prepareBoard()
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 8
 
 describe "DiagonalStrategy", ->
@@ -96,14 +98,9 @@ describe "DiagonalStrategy", ->
   describe "handleAliveCell", ->
     it "should kill the actual cell and make the neighbour right-beneath to live", ->
       game.set(0, 0)
-      changes = []
-      strategy.handleAliveCell(0, 0, changes)
-      expect(changes.length).toBe(2)
+      strategy.prepareBoard()
+      strategy.handleAliveCell(0, 0)
       #actual
-      expect(changes[0][0]).toBe(0)
-      expect(changes[0][1]).toBe(0)
-      expect(changes[0][2]).toBe(gameOfLife.Game.DEAD)
-      #neighbour
-      expect(changes[1][0]).toBe(1)
-      expect(changes[1][1]).toBe(1)
-      expect(changes[1][2]).toBe(gameOfLife.Game.LIVE)
+      expect(game.get(0,0)).toBe(false)
+      expect(game.get(1,1)).toBe(true)
+      expect(game.get(1,0)).toBe(false)

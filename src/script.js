@@ -11,16 +11,33 @@
     var canvas;
     canvas = getCanvas();
     ctx = canvas.getContext('2d');
-    game = new gameOfLife.Game(40, 20);
-    setGlider(5, 2, game);
-    setGlider(10, 2, game);
-    setGlider(15, 2, game);
-    setGlider(20, 2, game);
-    setGlider(23, 3, game);
-    setGlider(25, 2, game);
-    drawer = new gameOfLife.Drawer(game, 10);
+    game = new gameOfLife.Game(120, 80);
+    game.set(8, 10);
+    game.set(8, 11);
+    game.set(8, 12);
+    game.set(9, 10);
+    game.set(9, 11);
+    game.set(9, 12);
+    game.set(10, 10);
+    game.set(10, 11);
+    game.set(10, 12);
+    game.set(11, 10);
+    game.set(11, 11);
+    game.set(11, 12);
+    game.set(12, 10);
+    game.set(12, 11);
+    game.set(12, 12);
+    /*
+      setGlider(5, 2, game)
+      setGlider(10, 2, game)
+      setGlider(15, 2, game)
+      setGlider(20, 2, game)
+      setGlider(23, 3, game)
+      setGlider(25, 2, game)
+    */
+    drawer = new gameOfLife.Drawer(game, 4);
     drawer.drawGrid(ctx);
-    return setInterval(run_loop, 100);
+    return setInterval(run_loop, 1);
   });
 
   run_loop = function() {
