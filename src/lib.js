@@ -30,6 +30,7 @@
             this.cells[x][y] = value;
         };
 
+
         Game.prototype.nextRound = function() {
             var changes = [];
             for (var x = 0; x < this.numOfColumns; x++) {
