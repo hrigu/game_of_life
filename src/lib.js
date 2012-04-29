@@ -26,30 +26,17 @@
 
         //Sets the value on a specific cell. The value can be Game.LIVE or Game.DEAD
         Game.prototype.set = function(x, y, value) {
-            var point;
             if (value == null) value = gameOfLife.Game.LIVE;
-            point = this.modulo([x, y]);
-            this.cells[point[0]][point[1]] = value;
+            this.cells[x][y] = value;
         };
 
 
         //returns the value of a specific cell.
         Game.prototype.get = function(x, y) {
             var point;
-            point = this.modulo([x, y]);
             return this.cells[point[0]][point[1]];
         };
 
-        //handles the fact that points can be outside of the board. They are mapped into the board.
-        Game.prototype.modulo = function(point) {
-            var x = point[0];
-            if (x < 0) x += this.numOfColumns;
-            x = x % this.numOfColumns;
-            var y = point[1];
-            if (y < 0) y += this.numOfRows;
-            y = y % this.numOfRows;
-            return [x, y];
-        };
 
         Game.prototype.nextRound = function() {
             var changes = [];

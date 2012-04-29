@@ -20,11 +20,6 @@ describe("Game", function() {
             expect(game.cells[2][1]).toBe(gameOfLife.Game.DEAD);
         });
 
-        it("should handle position shift if the position is out of the board size", function() {
-            game.set(3, 3, gameOfLife.Game.LIVE);
-            expect(game.cells[0][1]).toBe(gameOfLife.Game.LIVE);
-        });
-
         describe("if this method is called without value", function() {
             it("should store a live cell at the given position", function() {
                 game.set(2, 1);
