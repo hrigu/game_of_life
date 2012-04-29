@@ -84,3 +84,26 @@ describe "GameOfLifeStrategy", ->
         game.set(2, 1)
         game.set(2, 2)
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 8
+
+describe "DiagonalStrategy", ->
+  game = null;
+  strategy = null;
+
+  beforeEach ->
+    game = new gameOfLife.Game(1, 2);
+    strategy = new gameOfLife.DiagonalStrategy(game);
+
+  describe "handleAliveCell", ->
+    it "should kill the actual cell and make the neighbour right-beneath to live", ->
+      game.set(0, 0)
+      changes = []
+      strategy.handleAliveCell(0, 0, changes)
+      expect(changes.length).toBe(2)
+      #actual
+      expect(changes[0][0]).toBe(0)
+      expect(changes[0][1]).toBe(0)
+      expect(changes[0][2]).toBe(gameOfLife.Game.DEAD)
+      #neighbour
+      expect(changes[1][0]).toBe(1)
+      expect(changes[1][1]).toBe(1)
+      expect(changes[1][2]).toBe(gameOfLife.Game.LIVE)
