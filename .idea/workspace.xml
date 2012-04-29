@@ -23,28 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="spec.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="spec.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/spec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="16" selection-start="2523" selection-end="2523" vertical-scroll-proportion="0.68438536">
+            <state line="71" column="16" selection-start="2523" selection-end="2523" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="lib.coffee" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/lib.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="91" selection-start="1097" selection-end="1097" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lib.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="lib.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lib.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="0" selection-start="948" selection-end="948" vertical-scroll-proportion="0.0">
+            <state line="3" column="0" selection-start="115" selection-end="115" vertical-scroll-proportion="0.049833886">
               <folding />
             </state>
           </provider>
@@ -79,8 +70,8 @@
         <option value="$PROJECT_DIR$/readme.txt" />
         <option value="$PROJECT_DIR$/src/script.js" />
         <option value="$PROJECT_DIR$/spec/spec.coffee" />
-        <option value="$PROJECT_DIR$/src/lib.js" />
         <option value="$PROJECT_DIR$/spec/spec.js" />
+        <option value="$PROJECT_DIR$/src/lib.js" />
       </list>
     </option>
   </component>
@@ -315,26 +306,28 @@
         <state line="47" column="72" selection-start="1805" selection-end="1805" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="91" selection-start="1097" selection-end="1097" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/lib.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="0" selection-start="948" selection-end="948" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/script.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="49" selection-start="541" selection-end="541" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="91" selection-start="1097" selection-end="1097" vertical-scroll-proportion="0.7807309">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spec/spec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="16" selection-start="2523" selection-end="2523" vertical-scroll-proportion="0.68438536">
+        <state line="71" column="16" selection-start="2523" selection-end="2523" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="115" selection-end="115" vertical-scroll-proportion="0.049833886">
           <folding />
         </state>
       </provider>

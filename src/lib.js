@@ -1,22 +1,6 @@
 //the library is wrapped in the so called top-level function safety wrapper to handle the namespace
 (function() {
 
-    //for class inheritance
-    var __hasProp = Object.prototype.hasOwnProperty;
-    var __extends = function(child, parent) {
-        for (var key in parent) {
-            if (__hasProp.call(parent, key)) child[key] = parent[key];
-        }
-        function ctor() {
-            this.constructor = child;
-        }
-
-        ctor.prototype = parent.prototype;
-        child.prototype = new ctor;
-        child.__super__ = parent.prototype;
-        return child;
-    };
-
     //the only object that is visible outside of the library
     this.gameOfLife = {};
 
