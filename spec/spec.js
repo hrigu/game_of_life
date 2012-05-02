@@ -53,7 +53,6 @@ describe("Game", function() {
             expect(game.cells[0][0]).toBe(gameOfLife.Game.DEAD);
             //neighbour
             expect(game.cells[1][1]).toBe(gameOfLife.Game.LIVE);
-
         })
     });
 
