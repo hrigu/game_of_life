@@ -4,13 +4,26 @@ describe("Game", function() {
         game = new gameOfLife.Game(3, 2);
     });
 
-    it("should have the right num of columns", function() {
-        expect(game.numOfColumns).toBe(3);
+    describe("init game", function(){
+        it("should have the right num of columns", function() {
+            expect(game.numOfColumns).toBe(3);
+        });
+
+        it("should have the right num of rows", function() {
+            expect(game.numOfRows).toBe(2);
+        });
+
+        it ("all cells should be dead", function(){
+        	for (var x = 0; x < game.numOfColumns; x++){
+        		for (var y = 0; y < game.numOfRows; y++){
+                    expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD);       			
+        		}		
+        	}
+        	
+        });
+    	
     });
 
-    it("should have the right num of rows", function() {
-        expect(game.numOfRows).toBe(2);
-    });
 
     describe("set", function() {
         it("should store a cell with the given value at the given position", function() {
@@ -20,7 +33,7 @@ describe("Game", function() {
             expect(game.cells[2][1]).toBe(gameOfLife.Game.DEAD);
         });
 
-        describe("if this method is called without value", function() {
+        describe("if this method is called without 'value' parameter", function() {
             it("should store a live cell at the given position", function() {
                 game.set(2, 1);
                 expect(game.cells[2][1]).toBe(true);
