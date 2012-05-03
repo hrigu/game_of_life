@@ -253,12 +253,16 @@
           var _ref2, _results2;
           _results2 = [];
           for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-            if (this.game.cells[x][y]) {
-              context.fillStyle = "black";
+            if (this.game.cells[x][y] !== this.game.oldCells[x][y]) {
+              if (this.game.cells[x][y]) {
+                context.fillStyle = "black";
+              } else {
+                context.fillStyle = "white";
+              }
+              _results2.push(this.drawRect(context, x, y));
             } else {
-              context.fillStyle = "white";
+              _results2.push(void 0);
             }
-            _results2.push(this.drawRect(context, x, y));
           }
           return _results2;
         }).call(this));
