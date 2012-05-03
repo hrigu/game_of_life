@@ -1,5 +1,5 @@
 (function() {
-  var ctx, drawer, game, getCanvas, run_loop, setGlider;
+  var ctx, drawer, game, getCanvas, initRandomLife, initStartLife, run_loop, setGlider;
 
   game = null;
 
@@ -11,35 +11,8 @@
     var canvas;
     canvas = getCanvas();
     ctx = canvas.getContext('2d');
-    game = new gameOfLife.Game(120, 80);
-    /*
-      game.set(8,10)
-      game.set(8,11)
-      game.set(8,12)
-      game.set(9,10)
-      game.set(9,11)
-      game.set(9,12)
-      game.set(10,10)
-      game.set(10,11)
-      game.set(10,12)
-      game.set(11,10)
-      game.set(11,11)
-      game.set(11,12)
-      game.set(12,10)
-      game.set(12,11)
-      game.set(12,12)
-    */
-    setGlider(10, 10, game, [-1, -1]);
-    setGlider(20, 20, game);
-    setGlider(30, 30, game, [-1, 2]);
-    setGlider(40, 40, game, [1, -1]);
-    /*
-      setGlider(10, 2, game)
-      setGlider(15, 2, game)
-      setGlider(20, 2, game)
-      setGlider(23, 3, game)
-      setGlider(25, 2, game)
-    */
+    game = new gameOfLife.Game(200, 160);
+    initStartLife();
     drawer = new gameOfLife.Drawer(game, 4);
     drawer.drawGrid(ctx);
     return setInterval(run_loop, 1);
@@ -52,6 +25,37 @@
 
   getCanvas = function() {
     return $("#myCanvas")[0];
+  };
+
+  initStartLife = function() {
+    return initRandomLife(50, 100, 50, 100, 0.3);
+  };
+
+  /*
+    setGlider(10, 10, game, [-1, -1])
+    setGlider(20, 20, game)
+    setGlider(30, 30, game, [-1, 1])
+    setGlider(40, 40, game, [1, -1])
+  */
+
+  initRandomLife = function(x_from, x_to, y_from, y_to, prob) {
+    var x, y, _results;
+    _results = [];
+    for (x = x_from; x_from <= x_to ? x <= x_to : x >= x_to; x_from <= x_to ? x++ : x--) {
+      _results.push((function() {
+        var _results2;
+        _results2 = [];
+        for (y = y_from; y_from <= y_to ? y <= y_to : y >= y_to; y_from <= y_to ? y++ : y--) {
+          if (Math.random() < prob) {
+            _results2.push(game.set(x, y));
+          } else {
+            _results2.push(void 0);
+          }
+        }
+        return _results2;
+      })());
+    }
+    return _results;
   };
 
   setGlider = function(x, y, game, change) {
