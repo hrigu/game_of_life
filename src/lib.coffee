@@ -5,7 +5,7 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.BrownMovingStrategy(this)
+    @strategy = new gameOfLife.GameOfLifeStrategy(this)
     @cells = this.initCells()
     @oldCells = this.initCells()
 
