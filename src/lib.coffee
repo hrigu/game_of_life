@@ -145,11 +145,12 @@ class gameOfLife.Drawer
   draw:(context) ->
     for x in [0..@game.numOfColumns-1]
       for y in [0..@game.numOfRows-1]
-       if @game.cells[x][y]
-        context.fillStyle = "black"
-       else
-        context.fillStyle = "white"
-       this.drawRect(context, x, y)
+       unless @game.cells[x][y] == @game.oldCells[x][y]
+         if @game.cells[x][y]
+          context.fillStyle = "black"
+         else
+          context.fillStyle = "white"
+         this.drawRect(context, x, y)
 
   drawRect:(context, x, y) ->
     context.fillRect(x * @factor+1, y * @factor+1, @factor-1, @factor-1)
