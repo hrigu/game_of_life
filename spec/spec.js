@@ -14,19 +14,25 @@
         return expect(game.numOfRows).toBe(2);
       });
       return it("all cells should be dead", function() {
-        var x, y, _ref, _results;
-        _results = [];
-        for (x = 0, _ref = game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
-          _results.push((function() {
-            var _ref2, _results2;
-            _results2 = [];
-            for (y = 0, _ref2 = game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-              _results2.push(expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD));
-            }
-            return _results2;
-          })());
-        }
-        return _results;
+        return game.visit(function(x, y) {
+          return expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD);
+        });
+      });
+    });
+    describe("visit", function() {
+      return it("should visit every cell", function() {
+        var numOfCell, numOfColumn, onBeginColumn, onCell;
+        numOfCell = 0;
+        numOfColumn = 0;
+        onBeginColumn = function(x) {
+          return numOfColumn = numOfColumn + 1;
+        };
+        onCell = function(x, y) {
+          return numOfCell = numOfCell + 1;
+        };
+        game.visit(onBeginColumn, onCell);
+        expect(numOfColumn).toBe(6);
+        return expect(numOfCell).toBe(3);
       });
     });
     return describe("set", function() {

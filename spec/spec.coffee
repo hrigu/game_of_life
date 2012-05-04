@@ -1,5 +1,7 @@
 describe "Game", ->
   game = null
+
+
   beforeEach ->
     game = new gameOfLife.Game(3, 2)
 
@@ -9,10 +11,24 @@ describe "Game", ->
     it "should have the right num of rows", ->
       expect(game.numOfRows).toBe 2
     it "all cells should be dead", ->
-      for x in [0..game.numOfColumns-1]
-        for y in [0..game.numOfRows-1]
-         expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD)
+      game.visit (x, y) ->
+        expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD)
 
+  describe "visit", ->
+    it "should visit every cell", ->
+      numOfCell = 0
+      numOfColumn = 0
+
+      onBeginColumn = (x) ->
+        numOfColumn = numOfColumn+1
+
+      onCell = (x, y) ->
+        numOfCell = numOfCell + 1
+
+      game.visit(onBeginColumn, onCell)
+
+      expect(numOfColumn).toBe 6
+      expect(numOfCell).toBe 3
 
   describe "set", ->
     it "should store a cell with the given value at the given position", ->

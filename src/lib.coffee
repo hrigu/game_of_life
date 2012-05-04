@@ -10,19 +10,26 @@ class gameOfLife.Game
 
   initCells: ->
     cells = []
-    for x in [1..@numOfColumns]
+    column = null
+
+    onBeginColumn = ->
       column = []
-      for y in [1..@numOfRows]
-        column.push(gameOfLife.Game.DEAD)
-      cells.push column
+      cells.push(column)
+    onCell = ->
+      column.push(gameOfLife.Game.DEAD)
+
+    this.visit(onCell, onBeginColumn)
     cells
 
-
+  visit:(onCell, onBeginColumn = ->) ->
+    for x in [0..@numOfColumns-1]
+      onBeginColumn(x)
+      for y in [0..@numOfRows-1]
+       onCell(x, y)
 
   reset:(cells) ->
-    for x in [0..@numOfColumns - 1]
-      for y in [0..@numOfRows - 1]
-        cells[x][y] = gameOfLife.Game.DEAD
+    this.visit (x, y)->
+      cells[x][y] = gameOfLife.Game.DEAD
 
   set:(x, y, value = gameOfLife.Game.LIVE) ->
     point = this.modulo([x, y])
@@ -53,12 +60,13 @@ class gameOfLife.Strategy
 
   nextRound:() ->
     this.prepareBoard()
-    for x in [0..@game.numOfColumns-1]
-      for y in [0..@game.numOfRows-1]
-        if (@game.oldCells[x][y])
-          this.handleAliveCell(x, y)
-        else
-          this.handleDeadCell(x, y)
+    #To use 'this' in the callback function, use =>
+    # http://coffeescript.org/#fat_arrow
+    @game.visit (x, y)=>
+      if (this.game.oldCells[x][y])
+        this.handleAliveCell(x, y)
+      else
+        this.handleDeadCell(x, y)
 
   prepareBoard:() ->
     newCells = @game.oldCells
@@ -144,14 +152,13 @@ class gameOfLife.Drawer
     context.stroke()
 
   draw:(context) ->
-    for x in [0..@game.numOfColumns-1]
-      for y in [0..@game.numOfRows-1]
-       unless @game.cells[x][y] == @game.oldCells[x][y]
-         if @game.cells[x][y]
+    @game.visit (x, y) =>
+      unless @game.cells[x][y] == @game.oldCells[x][y]
+        if @game.cells[x][y]
           context.fillStyle = "black"
-         else
+        else
           context.fillStyle = "white"
-         this.drawRect(context, x, y)
+        this.drawRect(context, x, y)
 
   drawRect:(context, x, y) ->
     context.fillRect(x * @factor+1, y * @factor+1, @factor-1, @factor-1)

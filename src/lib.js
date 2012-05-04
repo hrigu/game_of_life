@@ -18,32 +18,42 @@
     }
 
     Game.prototype.initCells = function() {
-      var cells, column, x, y, _ref, _ref2;
+      var cells, column, onBeginColumn, onCell;
       cells = [];
-      for (x = 1, _ref = this.numOfColumns; 1 <= _ref ? x <= _ref : x >= _ref; 1 <= _ref ? x++ : x--) {
+      column = null;
+      onBeginColumn = function() {
         column = [];
-        for (y = 1, _ref2 = this.numOfRows; 1 <= _ref2 ? y <= _ref2 : y >= _ref2; 1 <= _ref2 ? y++ : y--) {
-          column.push(gameOfLife.Game.DEAD);
-        }
-        cells.push(column);
-      }
+        return cells.push(column);
+      };
+      onCell = function() {
+        return column.push(gameOfLife.Game.DEAD);
+      };
+      this.visit(onCell, onBeginColumn);
       return cells;
     };
 
-    Game.prototype.reset = function(cells) {
+    Game.prototype.visit = function(onCell, onBeginColumn) {
       var x, y, _ref, _results;
+      if (onBeginColumn == null) onBeginColumn = function() {};
       _results = [];
       for (x = 0, _ref = this.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
+        onBeginColumn(x);
         _results.push((function() {
           var _ref2, _results2;
           _results2 = [];
           for (y = 0, _ref2 = this.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-            _results2.push(cells[x][y] = gameOfLife.Game.DEAD);
+            _results2.push(onCell(x, y));
           }
           return _results2;
         }).call(this));
       }
       return _results;
+    };
+
+    Game.prototype.reset = function(cells) {
+      return this.visit(function(x, y) {
+        return cells[x][y] = gameOfLife.Game.DEAD;
+      });
     };
 
     Game.prototype.set = function(x, y, value) {
@@ -91,24 +101,15 @@
     }
 
     Strategy.prototype.nextRound = function() {
-      var x, y, _ref, _results;
+      var _this = this;
       this.prepareBoard();
-      _results = [];
-      for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
-        _results.push((function() {
-          var _ref2, _results2;
-          _results2 = [];
-          for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-            if (this.game.oldCells[x][y]) {
-              _results2.push(this.handleAliveCell(x, y));
-            } else {
-              _results2.push(this.handleDeadCell(x, y));
-            }
-          }
-          return _results2;
-        }).call(this));
-      }
-      return _results;
+      return this.game.visit(function(x, y) {
+        if (_this.game.oldCells[x][y]) {
+          return _this.handleAliveCell(x, y);
+        } else {
+          return _this.handleDeadCell(x, y);
+        }
+      });
     };
 
     Strategy.prototype.prepareBoard = function() {
@@ -245,28 +246,17 @@
     };
 
     Drawer.prototype.draw = function(context) {
-      var x, y, _ref, _results;
-      _results = [];
-      for (x = 0, _ref = this.game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
-        _results.push((function() {
-          var _ref2, _results2;
-          _results2 = [];
-          for (y = 0, _ref2 = this.game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
-            if (this.game.cells[x][y] !== this.game.oldCells[x][y]) {
-              if (this.game.cells[x][y]) {
-                context.fillStyle = "black";
-              } else {
-                context.fillStyle = "white";
-              }
-              _results2.push(this.drawRect(context, x, y));
-            } else {
-              _results2.push(void 0);
-            }
+      var _this = this;
+      return this.game.visit(function(x, y) {
+        if (_this.game.cells[x][y] !== _this.game.oldCells[x][y]) {
+          if (_this.game.cells[x][y]) {
+            context.fillStyle = "black";
+          } else {
+            context.fillStyle = "white";
           }
-          return _results2;
-        }).call(this));
-      }
-      return _results;
+          return _this.drawRect(context, x, y);
+        }
+      });
     };
 
     Drawer.prototype.drawRect = function(context, x, y) {
