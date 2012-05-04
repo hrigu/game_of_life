@@ -6,11 +6,28 @@
     beforeEach(function() {
       return game = new gameOfLife.Game(3, 2);
     });
-    it("should have the right num of columns", function() {
-      return expect(game.numOfColumns).toBe(3);
-    });
-    it("should have the right num of rows", function() {
-      return expect(game.numOfRows).toBe(2);
+    describe("initGame", function() {
+      it("should have the right num of columns", function() {
+        return expect(game.numOfColumns).toBe(3);
+      });
+      it("should have the right num of rows", function() {
+        return expect(game.numOfRows).toBe(2);
+      });
+      return it("all cells should be dead", function() {
+        var x, y, _ref, _results;
+        _results = [];
+        for (x = 0, _ref = game.numOfColumns - 1; 0 <= _ref ? x <= _ref : x >= _ref; 0 <= _ref ? x++ : x--) {
+          _results.push((function() {
+            var _ref2, _results2;
+            _results2 = [];
+            for (y = 0, _ref2 = game.numOfRows - 1; 0 <= _ref2 ? y <= _ref2 : y >= _ref2; 0 <= _ref2 ? y++ : y--) {
+              _results2.push(expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD));
+            }
+            return _results2;
+          })());
+        }
+        return _results;
+      });
     });
     return describe("set", function() {
       it("should store a cell with the given value at the given position", function() {

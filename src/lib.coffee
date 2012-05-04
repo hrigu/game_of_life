@@ -5,7 +5,6 @@ class gameOfLife.Game
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @strategy = new gameOfLife.GameOfLifeStrategy(this)
     @cells = this.initCells()
     @oldCells = this.initCells()
 
@@ -17,6 +16,8 @@ class gameOfLife.Game
         column.push(gameOfLife.Game.DEAD)
       cells.push column
     cells
+
+
 
   reset:(cells) ->
     for x in [0..@numOfColumns - 1]

@@ -13,7 +13,6 @@
     function Game(numOfColumns, numOfRows) {
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.strategy = new gameOfLife.GameOfLifeStrategy(this);
       this.cells = this.initCells();
       this.oldCells = this.initCells();
     }

@@ -7,6 +7,8 @@ jQuery ->
   ctx = canvas.getContext '2d'
 
   game = new gameOfLife.Game(200, 160)
+  game.strategy = new gameOfLife.GameOfLifeStrategy(game)
+
   initStartLife()
 
   drawer = new gameOfLife.Drawer(game, 4)
