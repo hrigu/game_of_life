@@ -13,8 +13,7 @@ GameOfLifeTest.prototype.test_initializing_new_game = function() {
 	
 	for (var x = 0; x < this.game.numOfColumns; x++){
 		for (var y = 0; y < this.game.numOfRows; y++){
-			assertEquals(gameOfLife.Game.DEAD, this.game.cells[x][y])
-			
+			assertEquals(gameOfLife.Game.DEAD, this.game.cells[x][y])			
 		}		
 	}
 };
