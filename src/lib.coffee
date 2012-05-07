@@ -7,6 +7,7 @@ class gameOfLife.Game
   constructor:(@numOfColumns, @numOfRows) ->
     @cells = this.initCells()
     @oldCells = this.initCells()
+    @startLifeInitializer = new gameOfLife.StartLifeInitializer(this)
 
   initCells: ->
     cells = []
@@ -20,6 +21,9 @@ class gameOfLife.Game
 
     this.visit(onCell, onBeginColumn)
     cells
+
+  initStartLife: ->
+    @startLifeInitializer.initStartLife()
 
   visit:(onCell, onBeginColumn = ->) ->
     for x in [0..@numOfColumns-1]
@@ -160,3 +164,35 @@ class gameOfLife.Drawer
 
   drawRect:(context, x, y) ->
     context.fillRect(x * @factor+1, y * @factor+1, @factor-1, @factor-1)
+
+
+
+class gameOfLife.StartLifeInitializer
+
+  constructor:(@game) ->
+
+  initStartLife: ->
+    this.initRandomLife(80, 120, 50, 100, 0.3)
+
+
+  initRandomLife: (x_from, x_to, y_from, y_to, prob) ->
+    for x in [x_from..x_to]
+      for y in [y_from..y_to]
+        @game.set(x, y) if (Math.random() < prob)
+
+  setGlider: (x, y, change) ->
+    points = []
+    points.push [0, 0]
+    points.push [1, 1]
+    points.push [-1, 2]
+    points.push [0, 2]
+    points.push [1, 2]
+
+    if change
+      for point in points
+        point[0] = point[0] * change[0]
+        point[1] = point[1] * change[1]
+
+    for point in points
+      @game.set(x+point[0], x+point[1])
+

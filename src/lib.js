@@ -15,6 +15,7 @@
       this.numOfRows = numOfRows;
       this.cells = this.initCells();
       this.oldCells = this.initCells();
+      this.startLifeInitializer = new gameOfLife.StartLifeInitializer(this);
     }
 
     Game.prototype.initCells = function() {
@@ -30,6 +31,10 @@
       };
       this.visit(onCell, onBeginColumn);
       return cells;
+    };
+
+    Game.prototype.initStartLife = function() {
+      return this.startLifeInitializer.initStartLife();
     };
 
     Game.prototype.visit = function(onCell, onBeginColumn) {
@@ -264,6 +269,63 @@
     };
 
     return Drawer;
+
+  })();
+
+  gameOfLife.StartLifeInitializer = (function() {
+
+    function StartLifeInitializer(game) {
+      this.game = game;
+    }
+
+    StartLifeInitializer.prototype.initStartLife = function() {
+      return this.initRandomLife(80, 120, 50, 100, 0.3);
+    };
+
+    StartLifeInitializer.prototype.initRandomLife = function(x_from, x_to, y_from, y_to, prob) {
+      var x, y, _results;
+      _results = [];
+      for (x = x_from; x_from <= x_to ? x <= x_to : x >= x_to; x_from <= x_to ? x++ : x--) {
+        _results.push((function() {
+          var _results2;
+          _results2 = [];
+          for (y = y_from; y_from <= y_to ? y <= y_to : y >= y_to; y_from <= y_to ? y++ : y--) {
+            if (Math.random() < prob) {
+              _results2.push(this.game.set(x, y));
+            } else {
+              _results2.push(void 0);
+            }
+          }
+          return _results2;
+        }).call(this));
+      }
+      return _results;
+    };
+
+    StartLifeInitializer.prototype.setGlider = function(x, y, change) {
+      var point, points, _i, _j, _len, _len2, _results;
+      points = [];
+      points.push([0, 0]);
+      points.push([1, 1]);
+      points.push([-1, 2]);
+      points.push([0, 2]);
+      points.push([1, 2]);
+      if (change) {
+        for (_i = 0, _len = points.length; _i < _len; _i++) {
+          point = points[_i];
+          point[0] = point[0] * change[0];
+          point[1] = point[1] * change[1];
+        }
+      }
+      _results = [];
+      for (_j = 0, _len2 = points.length; _j < _len2; _j++) {
+        point = points[_j];
+        _results.push(this.game.set(x + point[0], x + point[1]));
+      }
+      return _results;
+    };
+
+    return StartLifeInitializer;
 
   })();
 
