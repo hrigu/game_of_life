@@ -1,5 +1,5 @@
 (function() {
-  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, tempoInMillies, toggleAnimate;
+  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, tempoInMillis, toggleAnimate;
 
   game = null;
 
@@ -9,7 +9,7 @@
 
   isAnimated = false;
 
-  tempoInMillies = 100;
+  tempoInMillis = 100;
 
   jQuery(function() {
     var canvas;
@@ -17,7 +17,6 @@
     ctx = canvas[0].getContext('2d');
     canvas.click(toggleAnimate);
     game = new gameOfLife.Game(200, 160);
-    game.strategy = new gameOfLife.GameOfLifeStrategy(game);
     game.initStartLife();
     drawer = new gameOfLife.Drawer(game, 4);
     drawer.drawGrid(ctx);
@@ -31,7 +30,7 @@
   };
 
   animate = function() {
-    if (isAnimated) return window.setTimeout(doWork, tempoInMillies);
+    if (isAnimated) return window.setTimeout(doWork, tempoInMillis);
   };
 
   doWork = function() {

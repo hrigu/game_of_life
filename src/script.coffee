@@ -2,7 +2,7 @@ game = null
 ctx = null
 drawer = null
 isAnimated = false
-tempoInMillies = 100
+tempoInMillis = 100
 
 
 jQuery ->
@@ -12,7 +12,6 @@ jQuery ->
   canvas.click(toggleAnimate)
 
   game = new gameOfLife.Game(200, 160)
-  game.strategy = new gameOfLife.GameOfLifeStrategy(game)
   game.initStartLife()
 
   drawer = new gameOfLife.Drawer(game, 4)
@@ -27,7 +26,7 @@ toggleAnimate = ->
 
 animate = ->
   if isAnimated
-    window.setTimeout(doWork, tempoInMillies)
+    window.setTimeout(doWork, tempoInMillis)
 
 doWork = ->
   game.nextRound()
