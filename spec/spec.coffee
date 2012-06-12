@@ -14,7 +14,7 @@ describe "Game", ->
         expect(game.cells[x][y]).toBe(gameOfLife.Game.DEAD)
 
   describe "visit", ->
-    it "should visit every cell", ->
+    it "should visit every column and cell", ->
       numOfCell = 0
       numOfColumn = 0
 

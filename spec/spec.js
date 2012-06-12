@@ -20,7 +20,7 @@
       });
     });
     describe("visit", function() {
-      return it("should visit every cell", function() {
+      return it("should visit every column and cell", function() {
         var numOfCell, numOfColumn, onBeginColumn, onCell;
         numOfCell = 0;
         numOfColumn = 0;

@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cc49e413-b27f-47c7-ad9b-3dcc1251f93b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/spec/test.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.txt" afterPath="$PROJECT_DIR$/readme.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/spec.coffee" afterPath="$PROJECT_DIR$/spec/spec.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spec/spec.js" afterPath="$PROJECT_DIR$/spec/spec.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib.coffee" afterPath="$PROJECT_DIR$/src/lib.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib.js" afterPath="$PROJECT_DIR$/src/lib.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script.coffee" afterPath="$PROJECT_DIR$/src/script.coffee" />
@@ -33,16 +32,16 @@
       <file leaf-file-name="lib.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/lib.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="3" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+            <state line="73" column="82" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="script.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/script.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="17" selection-start="69" selection-end="69" vertical-scroll-proportion="0.13043478">
+            <state line="13" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -66,10 +65,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="spec.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="spec.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="42" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.0">
+            <state line="16" column="42" selection-start="478" selection-end="478" vertical-scroll-proportion="0.4597701">
               <folding />
             </state>
           </provider>
@@ -91,10 +90,10 @@
         <option value="$PROJECT_DIR$/src/script.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/lib.js" />
-        <option value="$PROJECT_DIR$/spec/spec.coffee" />
         <option value="$PROJECT_DIR$/readme.txt" />
-        <option value="$PROJECT_DIR$/src/lib.coffee" />
         <option value="$PROJECT_DIR$/src/script.coffee" />
+        <option value="$PROJECT_DIR$/src/lib.coffee" />
+        <option value="$PROJECT_DIR$/spec/spec.coffee" />
       </list>
     </option>
   </component>
@@ -274,12 +273,12 @@
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.49710983" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.124487005" sideWeight="0.58261496" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.49247605" sideWeight="0.49712643" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.250342" sideWeight="0.49712643" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12787357" sideWeight="0.50752395" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12787357" sideWeight="0.749658" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.49247605" sideWeight="0.49784482" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.250342" sideWeight="0.49784482" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32967034" sideWeight="0.49421966" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -389,23 +388,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
+    <entry file="file://$PROJECT_DIR$/src/script.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="42" selection-start="1413" selection-end="1413" vertical-scroll-proportion="0.0">
+        <state line="13" column="0" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="3" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0">
+        <state line="73" column="82" selection-start="1532" selection-end="1532" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/script.coffee">
+    <entry file="file://$PROJECT_DIR$/spec/spec.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="17" selection-start="69" selection-end="69" vertical-scroll-proportion="0.13043478">
+        <state line="16" column="42" selection-start="478" selection-end="478" vertical-scroll-proportion="0.4597701">
           <folding />
         </state>
       </provider>

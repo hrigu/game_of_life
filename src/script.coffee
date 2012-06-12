@@ -11,8 +11,6 @@ jQuery ->
   canvas.click(toggleAnimate)
 
   game = new gameOfLife.Game(10, 8)
-  startLifeInitializer = new gameOfLife.StartLifeInitializer(game)
-  game.startLifeInitializer = startLifeInitializer
   game.initStartLife()
 
   drawer = new gameOfLife.Drawer(game, 20)

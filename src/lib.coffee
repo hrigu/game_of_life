@@ -26,8 +26,7 @@ class gameOfLife.Game
     return cells
 
   initStartLife: ->
-    @startLifeInitializer.initStartLife()
-
+    this.set(0, 0)
 
   ##
   # Visits each column and each cell and calls the given functions
@@ -67,14 +66,14 @@ class gameOfLife.Game
     [x, y]
 
   nextRound:() ->
-    this.prepareBoard()
+    this._prepareBoard()
     this.visit(
       (x, y) =>
         this.set(x+1, y+1) if  this.oldCells[x][y]
     )
 
 
-  prepareBoard:() ->
+  _prepareBoard:() ->
     newCells = this.oldCells
     this.oldCells = this.cells
     this.cells = newCells
@@ -115,44 +114,4 @@ class gameOfLife.Drawer
 
   drawRect:(context, x, y) ->
     context.fillRect(x * @factor+1, y * @factor+1, @factor-1, @factor-1)
-
-
-
-class gameOfLife.StartLifeInitializer
-
-  constructor:(@game) ->
-
-  initStartLife: ->
-    @game.set(0, 0)
-
-
-##
-#  initializes the game with random start life
-##
-class gameOfLife.RandomStartLifeInitializer extends gameOfLife.StartLifeInitializer
-
-  initStartLife: ->
-    this._initRandomLife(80, 120, 50, 100, 0.3)
-
-
-  _initRandomLife: (x_from, x_to, y_from, y_to, prob) ->
-    for x in [x_from..x_to]
-      for y in [y_from..y_to]
-        @game.set(x, y) if (Math.random() < prob)
-
-  setGlider: (x, y, change) ->
-    points = []
-    points.push [0, 0]
-    points.push [1, 1]
-    points.push [-1, 2]
-    points.push [0, 2]
-    points.push [1, 2]
-
-    if change
-      for point in points
-        point[0] = point[0] * change[0]
-        point[1] = point[1] * change[1]
-
-    for point in points
-      @game.set(x+point[0], x+point[1])
 

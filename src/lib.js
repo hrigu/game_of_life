@@ -1,6 +1,4 @@
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   this.gameOfLife = {};
 
@@ -33,7 +31,7 @@
     };
 
     Game.prototype.initStartLife = function() {
-      return this.startLifeInitializer.initStartLife();
+      return this.set(0, 0);
     };
 
     Game.prototype.visit = function(onCell, onBeginColumn) {
@@ -92,13 +90,13 @@
 
     Game.prototype.nextRound = function() {
       var _this = this;
-      this.prepareBoard();
+      this._prepareBoard();
       return this.visit(function(x, y) {
         if (_this.oldCells[x][y]) return _this.set(x + 1, y + 1);
       });
     };
 
-    Game.prototype.prepareBoard = function() {
+    Game.prototype._prepareBoard = function() {
       var newCells;
       newCells = this.oldCells;
       this.oldCells = this.cells;
@@ -157,78 +155,5 @@
     return Drawer;
 
   })();
-
-  gameOfLife.StartLifeInitializer = (function() {
-
-    function StartLifeInitializer(game) {
-      this.game = game;
-    }
-
-    StartLifeInitializer.prototype.initStartLife = function() {
-      return this.game.set(0, 0);
-    };
-
-    return StartLifeInitializer;
-
-  })();
-
-  gameOfLife.RandomStartLifeInitializer = (function(_super) {
-
-    __extends(RandomStartLifeInitializer, _super);
-
-    function RandomStartLifeInitializer() {
-      RandomStartLifeInitializer.__super__.constructor.apply(this, arguments);
-    }
-
-    RandomStartLifeInitializer.prototype.initStartLife = function() {
-      return this._initRandomLife(80, 120, 50, 100, 0.3);
-    };
-
-    RandomStartLifeInitializer.prototype._initRandomLife = function(x_from, x_to, y_from, y_to, prob) {
-      var x, y, _results;
-      _results = [];
-      for (x = x_from; x_from <= x_to ? x <= x_to : x >= x_to; x_from <= x_to ? x++ : x--) {
-        _results.push((function() {
-          var _results2;
-          _results2 = [];
-          for (y = y_from; y_from <= y_to ? y <= y_to : y >= y_to; y_from <= y_to ? y++ : y--) {
-            if (Math.random() < prob) {
-              _results2.push(this.game.set(x, y));
-            } else {
-              _results2.push(void 0);
-            }
-          }
-          return _results2;
-        }).call(this));
-      }
-      return _results;
-    };
-
-    RandomStartLifeInitializer.prototype.setGlider = function(x, y, change) {
-      var point, points, _i, _j, _len, _len2, _results;
-      points = [];
-      points.push([0, 0]);
-      points.push([1, 1]);
-      points.push([-1, 2]);
-      points.push([0, 2]);
-      points.push([1, 2]);
-      if (change) {
-        for (_i = 0, _len = points.length; _i < _len; _i++) {
-          point = points[_i];
-          point[0] = point[0] * change[0];
-          point[1] = point[1] * change[1];
-        }
-      }
-      _results = [];
-      for (_j = 0, _len2 = points.length; _j < _len2; _j++) {
-        point = points[_j];
-        _results.push(this.game.set(x + point[0], x + point[1]));
-      }
-      return _results;
-    };
-
-    return RandomStartLifeInitializer;
-
-  })(gameOfLife.StartLifeInitializer);
 
 }).call(this);

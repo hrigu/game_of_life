@@ -12,13 +12,11 @@
   tempoInMillis = 500;
 
   jQuery(function() {
-    var canvas, startLifeInitializer;
+    var canvas;
     canvas = $("#myCanvas");
     ctx = canvas[0].getContext('2d');
     canvas.click(toggleAnimate);
     game = new gameOfLife.Game(10, 8);
-    startLifeInitializer = new gameOfLife.StartLifeInitializer(game);
-    game.startLifeInitializer = startLifeInitializer;
     game.initStartLife();
     drawer = new gameOfLife.Drawer(game, 20);
     drawer.drawGrid(ctx);
