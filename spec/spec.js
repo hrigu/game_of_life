@@ -35,7 +35,7 @@
         return expect(numOfCell).toBe(3);
       });
     });
-    return describe("set", function() {
+    describe("set", function() {
       it("should store a cell with the given value at the given position", function() {
         game.set(2, 1, gameOfLife.Game.LIVE);
         expect(game.cells[2][1]).toBe(gameOfLife.Game.LIVE);
@@ -51,6 +51,13 @@
           game.set(2, 1);
           return expect(game.cells[2][1]).toBe(true);
         });
+      });
+    });
+    return describe("nextRound", function() {
+      return it("should move the life cell one step to the down-right corner", function() {
+        game.set(0, 0, gameOfLife.Game.LIVE);
+        game.nextRound();
+        return expect(game.cells[1][1]).toBe(gameOfLife.Game.LIVE);
       });
     });
   });

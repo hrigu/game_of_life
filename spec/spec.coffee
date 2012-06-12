@@ -38,7 +38,17 @@ describe "Game", ->
     it "should handle position shift if the position is out of the board size", ->
       game.set(3, 3, gameOfLife.Game.LIVE)
       expect(game.cells[0][1]).toBe gameOfLife.Game.LIVE
+
     describe "if this method is called without value", ->
       it "should store a live cell at the given position", ->
         game.set(2, 1)
         expect(game.cells[2][1]).toBe true
+
+
+  describe "nextRound", ->
+    it "should move the life cell one step to the down-right corner", ->
+      game.set(0, 0, gameOfLife.Game.LIVE)
+      game.nextRound()
+      expect(game.cells[1][1]).toBe gameOfLife.Game.LIVE
+
+
