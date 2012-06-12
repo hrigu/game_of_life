@@ -1,5 +1,5 @@
 (function() {
-  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, lastTime, now, tempoInMillies, toggleAnimate;
+  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, tempoInMillies, toggleAnimate;
 
   game = null;
 
@@ -29,10 +29,6 @@
     isAnimated = !isAnimated;
     if (isAnimated) return animate();
   };
-
-  lastTime = Date.now();
-
-  now = void 0;
 
   animate = function() {
     if (isAnimated) return window.setTimeout(doWork, tempoInMillies);

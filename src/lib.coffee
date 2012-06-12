@@ -1,5 +1,10 @@
 this.gameOfLife = {}
 
+
+##
+#
+#
+##
 class gameOfLife.Game
   @LIVE = true
   @DEAD = false
@@ -20,17 +25,24 @@ class gameOfLife.Game
       column.push(gameOfLife.Game.DEAD)
 
     this.visit(onCell, onBeginColumn)
-    cells
+    return cells
 
   initStartLife: ->
     @startLifeInitializer.initStartLife()
 
+
+  ##
+  # Visits each column and each cell and calls the given functions
+  ##
   visit:(onCell, onBeginColumn = ->) ->
     for x in [0..@numOfColumns-1]
       onBeginColumn(x)
       for y in [0..@numOfRows-1]
        onCell(x, y)
 
+  ##
+  # resets each cell to DEAD
+  ##
   reset:(cells) ->
     this.visit (x, y)->
       cells[x][y] = gameOfLife.Game.DEAD
@@ -66,7 +78,7 @@ class gameOfLife.Strategy
     this.prepareBoard()
     #To use 'this' in the callback function, use =>
     # http://coffeescript.org/#fat_arrow
-    @game.visit (x, y)=>
+    @game.visit (x, y) =>
       if (this.game.oldCells[x][y])
         this.handleAliveCell(x, y)
       else
@@ -109,6 +121,9 @@ class gameOfLife.GameOfLifeStrategy extends gameOfLife.Strategy
       livingNeighbours = livingNeighbours + 1 if @game.getOld(n[0],n[1])
     livingNeighbours
 
+
+
+
 class gameOfLife.BrownMovingStrategy extends gameOfLife.Strategy
 
   handleAliveCell:(x, y) ->
@@ -133,6 +148,12 @@ class gameOfLife.BrownMovingStrategy extends gameOfLife.Strategy
       deads.push n unless (@game.getOld(n[0],n[1]) || @game.get(n[0],n[1]))
     deads
 
+
+
+
+##
+#  Responsible to draw the new generation
+##
 class gameOfLife.Drawer
   constructor:(@game, @factor) ->
 
@@ -167,6 +188,9 @@ class gameOfLife.Drawer
 
 
 
+##
+#  initializes the game with start life
+##
 class gameOfLife.StartLifeInitializer
 
   constructor:(@game) ->
