@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc49e413-b27f-47c7-ad9b-3dcc1251f93b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib.coffee" afterPath="$PROJECT_DIR$/src/lib.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/script.js" afterPath="$PROJECT_DIR$/src/script.js" />
-    </list>
+    <list default="true" id="cc49e413-b27f-47c7-ad9b-3dcc1251f93b" name="Default" comment="" />
     <ignored path="game_of_life.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +43,7 @@
       <file leaf-file-name="lib.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/lib.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="23" selection-start="1639" selection-end="1639" vertical-scroll-proportion="0.21720733">
+            <state line="97" column="187" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.57686883">
               <folding />
             </state>
           </provider>
@@ -374,7 +370,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/lib.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="23" selection-start="1639" selection-end="1639" vertical-scroll-proportion="0.21720733">
+        <state line="97" column="187" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.57686883">
           <folding />
         </state>
       </provider>
