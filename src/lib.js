@@ -1,4 +1,6 @@
 (function() {
+  var __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   this.gameOfLife = {};
 
@@ -11,12 +13,11 @@
     function Game(numOfColumns, numOfRows) {
       this.numOfColumns = numOfColumns;
       this.numOfRows = numOfRows;
-      this.cells = this.initCells();
-      this.oldCells = this.initCells();
-      this.startLifeInitializer = new gameOfLife.StartLifeInitializer(this);
+      this.cells = this._initCells();
+      this.oldCells = this._initCells();
     }
 
-    Game.prototype.initCells = function() {
+    Game.prototype._initCells = function() {
       var cells, column, onBeginColumn, onCell;
       cells = [];
       column = null;
@@ -164,10 +165,26 @@
     }
 
     StartLifeInitializer.prototype.initStartLife = function() {
-      return this.initRandomLife(80, 120, 50, 100, 0.3);
+      return this.game.set(0, 0);
     };
 
-    StartLifeInitializer.prototype.initRandomLife = function(x_from, x_to, y_from, y_to, prob) {
+    return StartLifeInitializer;
+
+  })();
+
+  gameOfLife.RandomStartLifeInitializer = (function(_super) {
+
+    __extends(RandomStartLifeInitializer, _super);
+
+    function RandomStartLifeInitializer() {
+      RandomStartLifeInitializer.__super__.constructor.apply(this, arguments);
+    }
+
+    RandomStartLifeInitializer.prototype.initStartLife = function() {
+      return this._initRandomLife(80, 120, 50, 100, 0.3);
+    };
+
+    RandomStartLifeInitializer.prototype._initRandomLife = function(x_from, x_to, y_from, y_to, prob) {
       var x, y, _results;
       _results = [];
       for (x = x_from; x_from <= x_to ? x <= x_to : x >= x_to; x_from <= x_to ? x++ : x--) {
@@ -187,7 +204,7 @@
       return _results;
     };
 
-    StartLifeInitializer.prototype.setGlider = function(x, y, change) {
+    RandomStartLifeInitializer.prototype.setGlider = function(x, y, change) {
       var point, points, _i, _j, _len, _len2, _results;
       points = [];
       points.push([0, 0]);
@@ -210,8 +227,8 @@
       return _results;
     };
 
-    return StartLifeInitializer;
+    return RandomStartLifeInitializer;
 
-  })();
+  })(gameOfLife.StartLifeInitializer);
 
 }).call(this);

@@ -2,18 +2,17 @@ this.gameOfLife = {}
 
 
 ##
-#
+#  knows the grid with the cells. Each cell is alive or dead. In the next generation, life changes due some rules.
 ##
 class gameOfLife.Game
   @LIVE = true
   @DEAD = false
 
   constructor:(@numOfColumns, @numOfRows) ->
-    @cells = this.initCells()
-    @oldCells = this.initCells()
-    @startLifeInitializer = new gameOfLife.StartLifeInitializer(this)
+    @cells = this._initCells()
+    @oldCells = this._initCells()
 
-  initCells: ->
+  _initCells: ->
     cells = []
     column = null
 
@@ -119,18 +118,24 @@ class gameOfLife.Drawer
 
 
 
-##
-#  initializes the game with start life
-##
 class gameOfLife.StartLifeInitializer
 
   constructor:(@game) ->
 
   initStartLife: ->
-    this.initRandomLife(80, 120, 50, 100, 0.3)
+    @game.set(0, 0)
 
 
-  initRandomLife: (x_from, x_to, y_from, y_to, prob) ->
+##
+#  initializes the game with random start life
+##
+class gameOfLife.RandomStartLifeInitializer extends gameOfLife.StartLifeInitializer
+
+  initStartLife: ->
+    this._initRandomLife(80, 120, 50, 100, 0.3)
+
+
+  _initRandomLife: (x_from, x_to, y_from, y_to, prob) ->
     for x in [x_from..x_to]
       for y in [y_from..y_to]
         @game.set(x, y) if (Math.random() < prob)

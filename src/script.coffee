@@ -1,22 +1,24 @@
-game = null
-ctx = null
-drawer = null
-isAnimated = false
-tempoInMillis = 100
+game = undefined
+ctx = undefined
+drawer = undefined
+isAnimated = true
+tempoInMillis = 500
 
 
 jQuery ->
-  canvas = getCanvas()
+  canvas = $("#myCanvas")
   ctx = canvas[0].getContext('2d')
-
   canvas.click(toggleAnimate)
 
-  game = new gameOfLife.Game(200, 160)
+  game = new gameOfLife.Game(10, 8)
+  startLifeInitializer = new gameOfLife.StartLifeInitializer(game)
+  game.startLifeInitializer = startLifeInitializer
   game.initStartLife()
 
-  drawer = new gameOfLife.Drawer(game, 4)
+  drawer = new gameOfLife.Drawer(game, 20)
   drawer.drawGrid(ctx)
   drawer.draw(ctx)
+
   animate()
 
 
@@ -32,7 +34,3 @@ doWork = ->
   game.nextRound()
   drawer.draw(ctx)
   animate()
-
-
-getCanvas = ->
-	$("#myCanvas")

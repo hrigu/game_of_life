@@ -1,24 +1,26 @@
 (function() {
-  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, tempoInMillis, toggleAnimate;
+  var animate, ctx, doWork, drawer, game, isAnimated, tempoInMillis, toggleAnimate;
 
-  game = null;
+  game = void 0;
 
-  ctx = null;
+  ctx = void 0;
 
-  drawer = null;
+  drawer = void 0;
 
-  isAnimated = false;
+  isAnimated = true;
 
-  tempoInMillis = 100;
+  tempoInMillis = 500;
 
   jQuery(function() {
-    var canvas;
-    canvas = getCanvas();
+    var canvas, startLifeInitializer;
+    canvas = $("#myCanvas");
     ctx = canvas[0].getContext('2d');
     canvas.click(toggleAnimate);
-    game = new gameOfLife.Game(200, 160);
+    game = new gameOfLife.Game(10, 8);
+    startLifeInitializer = new gameOfLife.StartLifeInitializer(game);
+    game.startLifeInitializer = startLifeInitializer;
     game.initStartLife();
-    drawer = new gameOfLife.Drawer(game, 4);
+    drawer = new gameOfLife.Drawer(game, 20);
     drawer.drawGrid(ctx);
     drawer.draw(ctx);
     return animate();
@@ -37,10 +39,6 @@
     game.nextRound();
     drawer.draw(ctx);
     return animate();
-  };
-
-  getCanvas = function() {
-    return $("#myCanvas");
   };
 
 }).call(this);
