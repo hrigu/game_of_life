@@ -1,5 +1,5 @@
 (function() {
-  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, lastTime, now, requestAnimFrame, toggleAnimate;
+  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, lastTime, now, tempoInMillies, toggleAnimate;
 
   game = null;
 
@@ -8,6 +8,8 @@
   drawer = null;
 
   isAnimated = false;
+
+  tempoInMillies = 100;
 
   jQuery(function() {
     var canvas;
@@ -33,31 +35,17 @@
   now = void 0;
 
   animate = function() {
-    var waitsfor;
-    if (isAnimated) {
-      now = Date.now();
-      waitsfor = now - lastTime;
-      window.setTimeout(doWork, 1000);
-      lastTime = now;
-      return requestAnimFrame(function() {
-        return animate();
-      });
-    }
+    if (isAnimated) return window.setTimeout(doWork, tempoInMillies);
   };
 
   doWork = function() {
     game.nextRound();
-    return drawer.draw(ctx);
+    drawer.draw(ctx);
+    return animate();
   };
 
   getCanvas = function() {
     return $("#myCanvas");
   };
-
-  requestAnimFrame = (function() {
-    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) {
-      return window.setTimeout(callback, 1000 / 60);
-    };
-  })();
 
 }).call(this);

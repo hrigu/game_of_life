@@ -2,6 +2,8 @@ game = null
 ctx = null
 drawer = null
 isAnimated = false
+tempoInMillies = 100
+
 
 jQuery ->
   canvas = getCanvas()
@@ -23,43 +25,15 @@ toggleAnimate = ->
   isAnimated = !isAnimated
   animate() if isAnimated
 
-
-lastTime = Date.now()
-now = undefined
-
 animate = ->
   if isAnimated
-
-    now = Date.now()
-    waitsfor = now - lastTime
-    window.setTimeout(doWork, 1000)
-    lastTime = now
-    requestAnimFrame ->
-      animate()
+    window.setTimeout(doWork, tempoInMillies)
 
 doWork = ->
   game.nextRound()
   drawer.draw(ctx)
+  animate()
 
 
 getCanvas = ->
 	$("#myCanvas")
-
-requestAnimFrame = (->
-  #
-  # requestAnim shim layer by Paul Irish
-  #
-  # http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-  # see here for simple example: http://jsfiddle.net/paul/rjbGw/3/
-  #
-  window.requestAnimationFrame        ||
-  window.webkitRequestAnimationFrame  ||
-  window.mozRequestAnimationFrame    ||
-  window.oRequestAnimationFrame       ||
-  window.msRequestAnimationFrame     ||
-
-  # the fallfack: if none of  the above works: a function
-  (callback) ->
-    window.setTimeout(callback, 1000/60)
-)()
-
