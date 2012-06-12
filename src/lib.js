@@ -92,7 +92,19 @@
     };
 
     Game.prototype.nextRound = function() {
-      return this.strategy.nextRound();
+      var _this = this;
+      this.prepareBoard();
+      return this.visit(function(x, y) {
+        if (_this.oldCells[x][y]) return _this.set(x + 1, y + 1);
+      });
+    };
+
+    Game.prototype.prepareBoard = function() {
+      var newCells;
+      newCells = this.oldCells;
+      this.oldCells = this.cells;
+      this.cells = newCells;
+      return this.reset(this.cells);
     };
 
     return Game;

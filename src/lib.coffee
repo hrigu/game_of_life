@@ -3,7 +3,6 @@ this.gameOfLife = {}
 
 ##
 #
-#
 ##
 class gameOfLife.Game
   @LIVE = true
@@ -69,7 +68,21 @@ class gameOfLife.Game
     [x, y]
 
   nextRound:() ->
-    this.strategy.nextRound()
+    this.prepareBoard()
+    this.visit(
+      (x, y) =>
+        this.set(x+1, y+1) if  this.oldCells[x][y]
+    )
+
+
+  prepareBoard:() ->
+    newCells = this.oldCells
+    this.oldCells = this.cells
+    this.cells = newCells
+    this.reset(this.cells)
+
+
+
 
 class gameOfLife.Strategy
   constructor:(@game) ->
