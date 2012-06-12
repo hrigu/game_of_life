@@ -4,9 +4,8 @@ drawer = null
 isAnimated = false
 
 jQuery ->
-
   canvas = getCanvas()
-  ctx = canvas[0].getContext '2d'
+  ctx = canvas[0].getContext('2d')
 
   canvas.click(toggleAnimate)
 
@@ -16,7 +15,7 @@ jQuery ->
 
   drawer = new gameOfLife.Drawer(game, 4)
   drawer.drawGrid(ctx)
-  #setInterval(run_loop, 1)
+  drawer.draw(ctx)
   animate()
 
 
@@ -24,13 +23,23 @@ toggleAnimate = ->
   isAnimated = !isAnimated
   animate() if isAnimated
 
+
+lastTime = Date.now()
+now = undefined
+
 animate = ->
   if isAnimated
-    drawer.draw(ctx)
-    game.nextRound()
 
+    now = Date.now()
+    waitsfor = now - lastTime
+    window.setTimeout(doWork, 1000)
+    lastTime = now
     requestAnimFrame ->
       animate()
+
+doWork = ->
+  game.nextRound()
+  drawer.draw(ctx)
 
 
 getCanvas = ->
@@ -46,10 +55,11 @@ requestAnimFrame = (->
   window.requestAnimationFrame        ||
   window.webkitRequestAnimationFrame  ||
   window.mozRequestAnimationFrame    ||
-  window.oRequestAnimationFrame      ||
+  window.oRequestAnimationFrame       ||
   window.msRequestAnimationFrame     ||
-  # a function
+
+  # the fallfack: if none of  the above works: a function
   (callback) ->
-    window.setTimeout(callback, 1000 / 60)
+    window.setTimeout(callback, 1000/60)
 )()
 

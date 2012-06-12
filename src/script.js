@@ -1,5 +1,5 @@
 (function() {
-  var animate, ctx, drawer, game, getCanvas, isAnimated, requestAnimFrame, toggleAnimate;
+  var animate, ctx, doWork, drawer, game, getCanvas, isAnimated, lastTime, now, requestAnimFrame, toggleAnimate;
 
   game = null;
 
@@ -19,6 +19,7 @@
     game.initStartLife();
     drawer = new gameOfLife.Drawer(game, 4);
     drawer.drawGrid(ctx);
+    drawer.draw(ctx);
     return animate();
   });
 
@@ -27,14 +28,26 @@
     if (isAnimated) return animate();
   };
 
+  lastTime = Date.now();
+
+  now = void 0;
+
   animate = function() {
+    var waitsfor;
     if (isAnimated) {
-      drawer.draw(ctx);
-      game.nextRound();
+      now = Date.now();
+      waitsfor = now - lastTime;
+      window.setTimeout(doWork, 1000);
+      lastTime = now;
       return requestAnimFrame(function() {
         return animate();
       });
     }
+  };
+
+  doWork = function() {
+    game.nextRound();
+    return drawer.draw(ctx);
   };
 
   getCanvas = function() {
