@@ -93,7 +93,7 @@
       game = new gameOfLife.Game(3, 3);
       return strategy = new gameOfLife.GameOfLifeStrategy(game);
     });
-    return describe("numOfLivingNeighbours", function() {
+    describe("numOfLivingNeighbours", function() {
       describe("no living neighburs", function() {
         return it("should return 0", function() {
           game.set(1, 1);
@@ -129,6 +129,64 @@
           game.set(2, 2);
           strategy.prepareBoard();
           return expect(strategy.numOfLivingNeighbours(1, 1)).toBe(8);
+        });
+      });
+    });
+    describe("handleAliveCell", function() {
+      var spy;
+      spy = function(livingNeighbours) {
+        spyOn(strategy, 'numOfLivingNeighbours').andReturn(livingNeighbours);
+        spyOn(game, "set");
+        return strategy.handleAliveCell(1, 1);
+      };
+      describe("when 1 neighbour are alive", function() {
+        return it("should remain the current cell to be DEAD", function() {
+          spy(1);
+          return expect(game.set).not.toHaveBeenCalled();
+        });
+      });
+      describe("when 2 neighbours are alive", function() {
+        return it("should set the current cell to ALIVE", function() {
+          spy(2);
+          return expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+        });
+      });
+      describe("when 3 neighbours are alive", function() {
+        return it("should set the current cell to ALIVE", function() {
+          spy(3);
+          return expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+        });
+      });
+      return describe("when 4 neighbours are alive", function() {
+        return it("should remain the current cell to be DEAD", function() {
+          spy(4);
+          return expect(game.set).not.toHaveBeenCalled();
+        });
+      });
+    });
+    return describe("handleDeadCell", function() {
+      var spy;
+      spy = function(livingNeighbours) {
+        spyOn(strategy, 'numOfLivingNeighbours').andReturn(livingNeighbours);
+        spyOn(game, "set");
+        return strategy.handleDeadCell(1, 1);
+      };
+      describe("when 2 neighbours are alive", function() {
+        return it("should remain the current cell to be DEAD", function() {
+          spy(2);
+          return expect(game.set).not.toHaveBeenCalled();
+        });
+      });
+      describe("when 3 neighbours are alive", function() {
+        return it("should set the current cell to ALIVE", function() {
+          spy(3);
+          return expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+        });
+      });
+      return describe("when 4 neighbours are alive", function() {
+        return it("should remain the current cell to be DEAD", function() {
+          spy(4);
+          return expect(game.set).not.toHaveBeenCalled();
         });
       });
     });

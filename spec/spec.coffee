@@ -109,6 +109,58 @@ describe "GameOfLifeStrategy", ->
         strategy.prepareBoard()
         expect(strategy.numOfLivingNeighbours(1,1)).toBe 8
 
+  describe "handleAliveCell", ->
+
+    spy = (livingNeighbours) ->
+      spyOn(strategy, 'numOfLivingNeighbours').andReturn livingNeighbours;
+      spyOn(game, "set")
+      strategy.handleAliveCell(1, 1)
+
+
+    describe "when 1 neighbour are alive", ->
+      it "should remain the current cell to be DEAD", ->
+        spy(1)
+        expect(game.set).not.toHaveBeenCalled()
+
+    describe "when 2 neighbours are alive", ->
+      it "should set the current cell to ALIVE", ->
+        spy(2)
+        expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+
+    describe "when 3 neighbours are alive", ->
+      it "should set the current cell to ALIVE", ->
+        spy(3)
+        expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+
+    describe "when 4 neighbours are alive", ->
+      it "should remain the current cell to be DEAD", ->
+        spy(4)
+        expect(game.set).not.toHaveBeenCalled()
+
+
+  describe "handleDeadCell", ->
+
+    spy = (livingNeighbours) ->
+      spyOn(strategy, 'numOfLivingNeighbours').andReturn livingNeighbours;
+      spyOn(game, "set")
+      strategy.handleDeadCell(1, 1)
+
+
+    describe "when 2 neighbours are alive", ->
+      it "should remain the current cell to be DEAD", ->
+        spy(2)
+        expect(game.set).not.toHaveBeenCalled()
+
+    describe "when 3 neighbours are alive", ->
+      it "should set the current cell to ALIVE", ->
+        spy(3)
+        expect(game.set).toHaveBeenCalledWith(1, 1, gameOfLife.Game.LIVE);
+
+    describe "when 4 neighbours are alive", ->
+      it "should remain the current cell to be DEAD", ->
+        spy(4)
+        expect(game.set).not.toHaveBeenCalled()
+
 describe "DiagonalStrategy", ->
   game = null;
   strategy = null;
