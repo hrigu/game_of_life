@@ -1,4 +1,4 @@
-Coding Dojo with javascript, to train pair programming
+game of life for html5 canvas written in coffeescript
 
 See
  - coffeescript:
